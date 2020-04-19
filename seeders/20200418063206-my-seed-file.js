@@ -54,7 +54,7 @@ module.exports = {
       {}
     );
     queryInterface.bulkInsert(
-      "Activities",
+      "ThisWeekActivities",
       [
         {
           name: "4月零食盒 12件$499元!",
@@ -146,6 +146,12 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+      ],
+      {}
+    );
+    queryInterface.bulkInsert(
+      "NewActivities",
+      [
         {
           name: "毛起來 保健洗沐$139起!",
           description:
@@ -354,7 +360,8 @@ module.exports = {
         price: faker.finance.mask(),
         detail: faker.lorem.sentence(),
         discount: 75,
-        ActivityId: Math.floor(Math.random() * 14) + 1,
+        ThisWeekActivityId: Math.floor(Math.random() * 9) + 1,
+        NewActivityId: Math.floor(Math.random() * 5) + 1,
         CategoryId: Math.floor(Math.random() * 6) + 1,
         SubcategoryId: Math.floor(Math.random() * 13) + 1,
         createdAt: new Date(),
