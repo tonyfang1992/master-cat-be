@@ -80,6 +80,40 @@ const categoryController = {
       });
     });
   },
+  getThisWeekActivity: (req, res, callback) => {
+    return ThisWeekActivity.findByPk(req.params.id).then((ThisWeekActivity) => {
+      Product.findAll({}).then((Products) => {
+        const ThisWeekActivityProducts = Products.filter(
+          (product) => product.ThisWeekActivityId == req.params.id
+        );
+
+        let ThisWeekActivityTopProducts = [];
+        let ThisWeekActivityNewProducts = [];
+        ThisWeekActivityTopProducts = ThisWeekActivityProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        ThisWeekActivityNewProducts = ThisWeekActivityProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          ThisWeekActivity: JSON.parse(JSON.stringify(ThisWeekActivity)),
+          ThisWeekActivityTopProducts: JSON.parse(
+            JSON.stringify(ThisWeekActivityTopProducts)
+          ),
+          ThisWeekActivityNewProducts: JSON.parse(
+            JSON.stringify(ThisWeekActivityNewProducts)
+          ),
+        });
+      });
+    });
+  },
 };
 
 module.exports = categoryController;
