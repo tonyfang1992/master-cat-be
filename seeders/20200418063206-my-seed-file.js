@@ -356,6 +356,7 @@ module.exports = {
         image:
           "https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}",
         amount: faker.finance.mask(),
+        SaleAmount: faker.finance.mask(),
         specification: faker.lorem.sentence(),
         price: faker.finance.mask(),
         detail: faker.lorem.sentence(),
@@ -374,7 +375,8 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     queryInterface.bulkDelete("Users", null, {});
     queryInterface.bulkDelete("Cats", null, {});
-    queryInterface.bulkDelete("Activities", null, {});
+    queryInterface.bulkDelete("ThisWeekActivities", null, {});
+    queryInterface.bulkDelete("NewActivities", null, {});
     queryInterface.bulkDelete("Subcategories", null, {});
     queryInterface.bulkDelete("Categories", null, {});
     return queryInterface.bulkDelete("Products", null, {});

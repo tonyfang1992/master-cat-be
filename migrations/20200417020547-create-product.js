@@ -20,6 +20,9 @@ module.exports = {
       amount: {
         type: Sequelize.INTEGER,
       },
+      SaleAmount: {
+        type: Sequelize.INTEGER,
+      },
       specification: {
         type: Sequelize.STRING,
       },
