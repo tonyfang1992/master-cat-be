@@ -15,6 +15,36 @@ const categoryController = {
       });
     });
   },
+  getCategory: (req, res, callback) => {
+    return Category.findByPk(req.params.id).then((category) => {
+      Product.findAll({}).then((Products) => {
+        const CategoryProducts = Products.filter(
+          (product) => product.CategoryId == req.params.id
+        );
+
+        let CategoryTopProducts = [];
+        let CategoryNewProducts = [];
+        CategoryTopProducts = CategoryProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        CategoryNewProducts = CategoryProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          category: JSON.parse(JSON.stringify(category)),
+          CategoryTopProducts: JSON.parse(JSON.stringify(CategoryTopProducts)),
+          CategoryNewProducts: JSON.parse(JSON.stringify(CategoryNewProducts)),
+        });
+      });
+    });
+  },
 };
 
 module.exports = categoryController;

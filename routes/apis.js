@@ -8,5 +8,5 @@ router.get("/products", productController.getProducts);
 router.get("/products/:id", productController.getProduct);
 
 router.get("/activity", categoryController.getMenu);
-
+router.get("/category/:id", categoryController.getCategory);
 module.exports = router;

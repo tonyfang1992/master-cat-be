@@ -9,6 +9,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getCategory: (req, res) => {
+    categoryService.getCategory(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
