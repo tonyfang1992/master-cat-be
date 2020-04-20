@@ -9,4 +9,5 @@ router.get("/products/:id", productController.getProduct);
 
 router.get("/activity", categoryController.getMenu);
 router.get("/category/:id", categoryController.getCategory);
+router.get("/subcategory/:id", categoryController.getSubCategory);
 module.exports = router;

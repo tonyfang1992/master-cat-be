@@ -14,6 +14,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getSubCategory: (req, res) => {
+    categoryService.getSubCategory(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
