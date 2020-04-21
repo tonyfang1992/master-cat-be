@@ -18,5 +18,10 @@ const productController = {
       return res.json(data);
     });
   },
+  getNewProducts: (req, res) => {
+    productService.getNewProducts(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 module.exports = productController;

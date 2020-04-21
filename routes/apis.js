@@ -6,6 +6,7 @@ const categoryController = require("../controllers/apis/categoryController");
 
 router.get("/products", productController.getProducts);
 router.get("/products/top", productController.getTopProducts);
+router.get("/products/new", productController.getNewProducts);
 router.get("/products/:id", productController.getProduct);
 
 router.get("/activity", categoryController.getMenu);

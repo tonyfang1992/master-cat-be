@@ -52,5 +52,16 @@ const productController = {
       });
     });
   },
+  getNewProducts: (req, res, callback) => {
+    return Product.findAll().then((products) => {
+      let NewProducts = [];
+      NewProducts = products
+        .sort((a, b) => a.updatedAt - b.updatedAt)
+        .slice(0, 40);
+      callback({
+        NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+      });
+    });
+  },
 };
 module.exports = productController;
