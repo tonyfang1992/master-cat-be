@@ -3,6 +3,9 @@ const router = express.Router();
 
 const productController = require("../controllers/apis/productController");
 const categoryController = require("../controllers/apis/categoryController");
+const userController = require("../controllers/apis/userController");
+
+router.post("/signin", userController.signIn);
 
 router.get("/products", productController.getProducts);
 router.get("/products/top", productController.getTopProducts);

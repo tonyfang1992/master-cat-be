@@ -5,6 +5,9 @@ const port = 3001;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 // cors 的預設為全開放
 app.use(cors());
 
