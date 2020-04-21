@@ -13,5 +13,10 @@ const productController = {
       return res.json(data);
     });
   },
+  getTopProducts: (req, res) => {
+    productService.getTopProducts(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 module.exports = productController;
