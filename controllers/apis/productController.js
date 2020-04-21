@@ -23,5 +23,10 @@ const productController = {
       return res.json(data);
     });
   },
+  getHotProducts: (req, res) => {
+    productService.getHotProducts(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 module.exports = productController;

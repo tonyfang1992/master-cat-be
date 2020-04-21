@@ -63,5 +63,16 @@ const productController = {
       });
     });
   },
+  getHotProducts: (req, res, callback) => {
+    return Product.findAll().then((products) => {
+      let HotProducts = [];
+      HotProducts = products
+        .sort((a, b) => b.SaleAmount - a.SaleAmount)
+        .slice(0, 40);
+      callback({
+        HotProducts: JSON.parse(JSON.stringify(HotProducts)),
+      });
+    });
+  },
 };
 module.exports = productController;
