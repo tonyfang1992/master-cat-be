@@ -114,6 +114,40 @@ const categoryController = {
       });
     });
   },
+  getNewActivity: (req, res, callback) => {
+    return NewActivity.findByPk(req.params.id).then((NewActivity) => {
+      Product.findAll({}).then((Products) => {
+        const NewActivityProducts = Products.filter(
+          (product) => product.NewActivityId == req.params.id
+        );
+
+        let NewActivityTopProducts = [];
+        let NewActivityNewProducts = [];
+        NewActivityTopProducts = NewActivityProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        NewActivityNewProducts = NewActivityProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          NewActivity: JSON.parse(JSON.stringify(NewActivity)),
+          NewActivityTopProducts: JSON.parse(
+            JSON.stringify(NewActivityTopProducts)
+          ),
+          NewActivityNewProducts: JSON.parse(
+            JSON.stringify(NewActivityNewProducts)
+          ),
+        });
+      });
+    });
+  },
 };
 
 module.exports = categoryController;

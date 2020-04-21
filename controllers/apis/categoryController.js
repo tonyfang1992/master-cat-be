@@ -24,6 +24,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getNewActivity: (req, res) => {
+    categoryService.getNewActivity(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
