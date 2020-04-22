@@ -6,6 +6,7 @@ const categoryController = require("../controllers/apis/categoryController");
 const userController = require("../controllers/apis/userController");
 
 router.post("/signin", userController.signIn);
+router.post("/signup", userController.signUp);
 
 router.get("/products", productController.getProducts);
 router.get("/products/top", productController.getTopProducts);

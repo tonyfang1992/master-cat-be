@@ -47,6 +47,31 @@ let userController = {
       });
     });
   },
+  signUp: (req, res) => {
+    if (req.body.passwordCheck !== req.body.password) {
+      return res.redirect("/signup");
+    } else {
+      // confirm unique user
+      User.findOne({ where: { email: req.body.email } }).then((user) => {
+        if (user) {
+          return res.redirect("/signup");
+        } else {
+          User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(
+              req.body.password,
+              bcrypt.genSaltSync(10),
+              null
+            ),
+            role: req.body.role,
+          }).then((user) => {
+            return res.json({ status: "success", message: "成功註冊帳號！" });
+          });
+        }
+      });
+    }
+  },
 };
 
 module.exports = userController;
