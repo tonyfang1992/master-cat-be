@@ -5,6 +5,7 @@ const passport = require("../config/passport");
 const productController = require("../controllers/apis/productController");
 const categoryController = require("../controllers/apis/categoryController");
 const userController = require("../controllers/apis/userController");
+const catController = require("../controllers/apis/catController");
 
 const authenticated = passport.authenticate("jwt", { session: false });
 
@@ -12,6 +13,9 @@ router.post("/signin", userController.signIn);
 router.post("/signup", userController.signUp);
 router.get("/profile/:id", userController.getUser);
 router.get("/get_current_user", authenticated, userController.getCurrentUser);
+
+router.post("/cat", authenticated, catController.postCat);
+router.put("/cat", authenticated, catController.putCat);
 
 router.get("/products", productController.getProducts);
 router.get("/products/top", productController.getTopProducts);
