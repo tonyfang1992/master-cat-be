@@ -3,7 +3,7 @@ const Product = db.Product;
 const Category = db.Category;
 const SubCategory = db.SubCategory;
 
-const productController = {
+const productService = {
   getProducts: (req, res, callback) => {
     return Product.findAll().then((products) => {
       callback({ products: JSON.parse(JSON.stringify(products)) });
@@ -75,4 +75,4 @@ const productController = {
     });
   },
 };
-module.exports = productController;
+module.exports = productService;

@@ -5,7 +5,7 @@ const SubCategory = db.SubCategory;
 const ThisWeekActivity = db.ThisWeekActivity;
 const NewActivity = db.NewActivity;
 
-const categoryController = {
+const categoryService = {
   getMenu: (req, res, callback) => {
     return ThisWeekActivity.findAll().then((ThisWeekActivities) => {
       NewActivity.findAll().then((NewActivities) => {
@@ -150,4 +150,4 @@ const categoryController = {
   },
 };
 
-module.exports = categoryController;
+module.exports = categoryService;
