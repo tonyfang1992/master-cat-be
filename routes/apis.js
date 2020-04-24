@@ -7,6 +7,7 @@ const categoryController = require("../controllers/apis/categoryController");
 const userController = require("../controllers/apis/userController");
 const catController = require("../controllers/apis/catController");
 const cartController = require("../controllers/apis/cartController");
+const orderController = require("../controllers/apis/orderController");
 
 const authenticated = passport.authenticate("jwt", { session: false });
 
@@ -29,6 +30,8 @@ router.post("/cart", cartController.postCart);
 router.post("/cartItem/:id/add", cartController.addCartItem);
 router.post("/cartItem/:id/sub", cartController.subCartItem);
 router.delete("/cartItem/:id", cartController.deleteCartItem);
+
+router.post("/order", orderController.postOrder);
 
 router.get("/activity", categoryController.getMenu);
 router.get("/category/:id", categoryController.getCategory);
