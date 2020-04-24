@@ -51,6 +51,34 @@ const CartService = {
       });
     });
   },
+  addCartItem: (req, res, callback) => {
+    CartItem.findByPk(req.params.id).then((cartItem) => {
+      cartItem
+        .update({
+          quantity: cartItem.quantity + 1,
+        })
+        .then((cartItem) => {
+          return callback({
+            status: "success",
+            message: "成功修改購物車內容！",
+          });
+        });
+    });
+  },
+  subCartItem: (req, res, callback) => {
+    CartItem.findByPk(req.params.id).then((cartItem) => {
+      cartItem
+        .update({
+          quantity: cartItem.quantity - 1 >= 1 ? cartItem.quantity - 1 : 1,
+        })
+        .then((cartItem) => {
+          return callback({
+            status: "success",
+            message: "成功修改購物車內容！",
+          });
+        });
+    });
+  },
 };
 
 module.exports = CartService;
