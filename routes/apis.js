@@ -6,6 +6,7 @@ const productController = require("../controllers/apis/productController");
 const categoryController = require("../controllers/apis/categoryController");
 const userController = require("../controllers/apis/userController");
 const catController = require("../controllers/apis/catController");
+const cartController = require("../controllers/apis/cartController");
 
 const authenticated = passport.authenticate("jwt", { session: false });
 
@@ -22,6 +23,9 @@ router.get("/products/top", productController.getTopProducts);
 router.get("/products/new", productController.getNewProducts);
 router.get("/products/hot", productController.getHotProducts);
 router.get("/products/:id", productController.getProduct);
+
+router.get("/cart/:id", cartController.getCart);
+router.post("/cart", cartController.postCart);
 
 router.get("/activity", categoryController.getMenu);
 router.get("/category/:id", categoryController.getCategory);
