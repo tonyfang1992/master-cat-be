@@ -22,6 +22,11 @@ const CartController = {
       return res.json(data);
     });
   },
+  deleteCartItem: (req, res) => {
+    cartService.deleteCartItem(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = CartController;

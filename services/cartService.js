@@ -79,6 +79,13 @@ const CartService = {
         });
     });
   },
+  deleteCartItem: (req, res, callback) => {
+    CartItem.findByPk(req.params.id).then((cartItem) => {
+      cartItem.destroy().then((cartItem) => {
+        return callback({ status: "success", message: "成功刪除購物車內商品" });
+      });
+    });
+  },
 };
 
 module.exports = CartService;
