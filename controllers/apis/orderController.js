@@ -7,6 +7,11 @@ const OrderController = {
       return res.json(data);
     });
   },
+  getOrders: (req, res) => {
+    orderService.getOrders(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = OrderController;

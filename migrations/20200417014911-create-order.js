@@ -26,6 +26,9 @@ module.exports = {
       payment_status: {
         type: Sequelize.STRING,
       },
+      payment_method: {
+        type: Sequelize.STRING,
+      },
       shipping_status: {
         type: Sequelize.STRING,
       },

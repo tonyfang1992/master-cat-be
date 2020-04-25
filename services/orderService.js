@@ -5,6 +5,14 @@ const Order = db.Order;
 const OrderItem = db.OrderItem;
 
 const OrderService = {
+  getOrders: (req, res, callback) => {
+    Order.findAll({
+      where: { UserId: req.params.id },
+      include: "items",
+    }).then((orders) => {
+      return callback({ orders });
+    });
+  },
   postOrder: (req, res, callback) => {
     return Cart.findOne({
       where: { uuid: req.body.cartId },
@@ -17,7 +25,7 @@ const OrderService = {
         shipping_status: 0,
         payment_status: 0,
         UserId: req.body.userId,
-        amount: 1,
+        amount: req.body.amount,
       }).then((order) => {
         var results = [];
         for (var i = 0; i < cart.items.length; i++) {
