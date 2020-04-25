@@ -10,9 +10,9 @@ const MerchantID = process.env.MERCHANT_ID;
 const HashKey = process.env.HASH_KEY;
 const HashIV = process.env.HASH_IV;
 const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
-const ReturnURL = URL + "/spgateway/callback?from=ReturnURL";
-const NotifyURL = URL + "/spgateway/callback?from=NotifyURL";
-const ClientBackURL = URL + "/orders";
+const ReturnURL = URL + "/api/spgateway/callback";
+const NotifyURL = URL + "/api/spgateway/callback";
+const ClientBackURL = "https://75fc5c02.ngrok.io" + "/cats";
 
 function genDataChain(TradeInfo) {
   let results = [];
@@ -132,7 +132,11 @@ const OrderService = {
         }
 
         return Promise.all(results).then(() =>
-          callback({ status: "success", message: "成功建立訂單" })
+          cart
+            .destroy()
+            .then(() =>
+              callback({ status: "success", message: "成功建立訂單" })
+            )
         );
       });
     });
@@ -156,7 +160,36 @@ const OrderService = {
         order.id,
         "q710370@gmail.com"
       );
-      return callback({ order, tradeInfo });
+      order
+        .update({
+          ...req.body,
+          sn: tradeInfo.MerchantOrderNo,
+        })
+        .then((order) => {
+          return callback({ order, tradeInfo });
+        });
+    });
+  },
+  spgatewayCallback: (req, res) => {
+    console.log("===== spgatewayCallback: TradeInfo =====");
+    console.log(req.body.TradeInfo);
+
+    const data = JSON.parse(create_mpg_aes_decrypt(req.body.TradeInfo));
+
+    console.log("===== spgatewayCallback: create_mpg_aes_decrypt、data =====");
+    console.log(data);
+
+    return Order.findAll({
+      where: { sn: data["Result"]["MerchantOrderNo"] },
+    }).then((orders) => {
+      orders[0]
+        .update({
+          ...req.body,
+          payment_status: 1,
+        })
+        .then((order) => {
+          return res.redirect("http://localhost:8080/#/");
+        });
     });
   },
 };

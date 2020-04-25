@@ -35,6 +35,7 @@ router.get("/orders/:id", orderController.getOrders);
 router.post("/order", orderController.postOrder);
 router.post("/order/:id/cancel", orderController.cancelOrder);
 router.get("/order/:id/payment", orderController.getPayment);
+router.post("/spgateway/callback", orderController.spgatewayCallback);
 
 router.get("/activity", categoryController.getMenu);
 router.get("/category/:id", categoryController.getCategory);
