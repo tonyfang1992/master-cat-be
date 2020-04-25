@@ -45,6 +45,18 @@ const OrderService = {
       });
     });
   },
+  cancelOrder: (req, res, callback) => {
+    return Order.findByPk(req.params.id).then((order) => {
+      order
+        .update({
+          shipping_status: "-1",
+          payment_status: "-1",
+        })
+        .then((order) => {
+          callback({ status: "success", message: "成功取消訂單" });
+        });
+    });
+  },
 };
 
 module.exports = OrderService;
