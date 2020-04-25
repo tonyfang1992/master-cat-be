@@ -17,6 +17,11 @@ const OrderController = {
       return res.json(data);
     });
   },
+  getPayment: (req, res) => {
+    orderService.getPayment(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = OrderController;
