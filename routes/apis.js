@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../config/passport");
+const multer = require("multer");
+const upload = multer({ dest: "temp/" });
 
 const productController = require("../controllers/apis/productController");
 const categoryController = require("../controllers/apis/categoryController");
@@ -8,6 +10,7 @@ const userController = require("../controllers/apis/userController");
 const catController = require("../controllers/apis/catController");
 const cartController = require("../controllers/apis/cartController");
 const orderController = require("../controllers/apis/orderController");
+const adminController = require("../controllers/apis/adminController");
 
 const authenticated = passport.authenticate("jwt", { session: false });
 
@@ -42,4 +45,12 @@ router.get("/category/:id", categoryController.getCategory);
 router.get("/subcategory/:id", categoryController.getSubCategory);
 router.get("/thisweekactivity/:id", categoryController.getThisWeekActivity);
 router.get("/newactivity/:id", categoryController.getNewActivity);
+
+router.get("/admin/createproduct", adminController.getCreateProduct);
+router.post(
+  "/admin/product",
+  upload.single("image"),
+  adminController.postCreateProduct
+);
+
 module.exports = router;
