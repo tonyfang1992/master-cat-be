@@ -46,11 +46,16 @@ router.get("/subcategory/:id", categoryController.getSubCategory);
 router.get("/thisweekactivity/:id", categoryController.getThisWeekActivity);
 router.get("/newactivity/:id", categoryController.getNewActivity);
 
-router.get("/admin/createproduct", adminController.getCreateProduct);
+router.get("/admin/CreateProduct", adminController.getCreateProduct);
 router.post(
-  "/admin/product",
+  "/admin/NewProduct",
   upload.single("image"),
-  adminController.postCreateProduct
+  adminController.postNewProduct
+);
+router.post(
+  "/admin/NewActivity",
+  upload.single("image"),
+  adminController.postNewActivity
 );
 
 module.exports = router;

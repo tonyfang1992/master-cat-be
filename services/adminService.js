@@ -25,7 +25,7 @@ const AdminService = {
       });
     });
   },
-  postCreateProduct: (req, res, callback) => {
+  postNewProduct: (req, res, callback) => {
     const { file } = req;
     if (
       !req.body.name ||
@@ -41,7 +41,6 @@ const AdminService = {
     }
 
     if (file) {
-      console.log("1");
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
         return Product.create({
@@ -64,7 +63,6 @@ const AdminService = {
         });
       });
     } else {
-      console.log("2");
       return Product.create({
         name: req.body.name,
         detail: req.body.detail,
@@ -83,6 +81,72 @@ const AdminService = {
           message: "成功新增產品",
         });
       });
+    }
+  },
+  postNewActivity: (req, res, callback) => {
+    const { file } = req;
+    if (!req.body.name || !req.body.description || !req.body.Activity) {
+      return callback({ status: "error", message: "表格皆須填滿" });
+    }
+    if (req.body.Activity == 1) {
+      if (file) {
+        imgur.setClientID(IMGUR_CLIENT_ID);
+        imgur.upload(file.path, (err, img) => {
+          return ThisWeekActivity.create({
+            name: req.body.name,
+            description: req.body.description,
+            discount: req.body.discount || null,
+            image: file ? img.data.link : null,
+          }).then((activity) => {
+            callback({
+              status: "success",
+              message: "成功新增產品",
+            });
+          });
+        });
+      } else {
+        return ThisWeekActivity.create({
+          name: req.body.name,
+          description: req.body.description,
+          discount: req.body.discount || null,
+          image: null,
+        }).then((activity) => {
+          callback({
+            status: "success",
+            message: "成功新增產品",
+          });
+        });
+      }
+    }
+    if (req.body.Activity == 2) {
+      if (file) {
+        imgur.setClientID(IMGUR_CLIENT_ID);
+        imgur.upload(file.path, (err, img) => {
+          return NewActivity.create({
+            name: req.body.name,
+            description: req.body.description,
+            discount: req.body.discount || null,
+            image: file ? img.data.link : null,
+          }).then((activity) => {
+            callback({
+              status: "success",
+              message: "成功新增產品",
+            });
+          });
+        });
+      } else {
+        return NewActivity.create({
+          name: req.body.name,
+          description: req.body.description,
+          discount: req.body.discount || null,
+          image: null,
+        }).then((activity) => {
+          callback({
+            status: "success",
+            message: "成功新增產品",
+          });
+        });
+      }
     }
   },
 };
