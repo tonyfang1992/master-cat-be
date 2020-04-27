@@ -149,6 +149,13 @@ const AdminService = {
       }
     }
   },
+  getStore: (req, res, callback) => {
+    return Product.findAll({
+      attributes: ["id", "SubcategoryId", "name", "amount", "SaleAmount"],
+    }).then((products) => {
+      callback({ products });
+    });
+  },
 };
 
 module.exports = AdminService;

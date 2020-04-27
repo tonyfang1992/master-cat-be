@@ -47,6 +47,7 @@ router.get("/thisweekactivity/:id", categoryController.getThisWeekActivity);
 router.get("/newactivity/:id", categoryController.getNewActivity);
 
 router.get("/admin/CreateProduct", adminController.getCreateProduct);
+router.get("/admin/store", adminController.getStore);
 router.post(
   "/admin/NewProduct",
   upload.single("image"),

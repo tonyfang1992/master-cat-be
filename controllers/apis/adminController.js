@@ -7,6 +7,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getStore: (req, res) => {
+    adminService.getStore(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   postNewProduct: (req, res) => {
     adminService.postNewProduct(req, res, (data) => {
       return res.json(data);
