@@ -44,7 +44,7 @@ const productService = {
         .sort((a, b) => b.SaleAmount - a.SaleAmount)
         .slice(0, 10);
       NewProducts = products
-        .sort((a, b) => a.updatedAt - b.updatedAt)
+        .sort((a, b) => b.createdAt - a.createdAt)
         .slice(0, 10);
       callback({
         TopProducts: JSON.parse(JSON.stringify(TopProducts)),
@@ -56,7 +56,7 @@ const productService = {
     return Product.findAll().then((products) => {
       let NewProducts = [];
       NewProducts = products
-        .sort((a, b) => a.updatedAt - b.updatedAt)
+        .sort((a, b) => b.createdAt - a.createdAt)
         .slice(0, 40);
       callback({
         NewProducts: JSON.parse(JSON.stringify(NewProducts)),
