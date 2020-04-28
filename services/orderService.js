@@ -3,16 +3,17 @@ const Cart = db.Cart;
 const CartItem = db.CartItem;
 const Order = db.Order;
 const OrderItem = db.OrderItem;
+const Product = db.Product;
 const crypto = require("crypto");
 
-const URL = "https://f9bad993.ngrok.io";
+const URL = "https://8b29f30f.ngrok.io";
 const MerchantID = process.env.MERCHANT_ID;
 const HashKey = process.env.HASH_KEY;
 const HashIV = process.env.HASH_IV;
 const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
 const ReturnURL = URL + "/api/spgateway/callback";
 const NotifyURL = URL + "/api/spgateway/callback";
-const ClientBackURL = "https://75fc5c02.ngrok.io" + "/cats";
+const ClientBackURL = "https://631c5be5.ngrok.io" + "/cats";
 
 function genDataChain(TradeInfo) {
   let results = [];
@@ -188,7 +189,20 @@ const OrderService = {
           payment_status: 1,
         })
         .then((order) => {
-          return res.redirect("http://localhost:8080/#/");
+          return OrderItem.findAll({
+            where: { OrderId: order.id },
+          }).then((orderItems) => {
+            for (let i = 0; i < orderItems.length; i++) {
+              Product.findByPk(orderItems[i].ProductId).then((product) => {
+                product.update({
+                  ...product,
+                  amount: product.amount - orderItems[i].quantity,
+                  SaleAmount: product.SaleAmount + orderItems[i].quantity,
+                });
+              });
+            }
+            return res.redirect("http://localhost:8080/#/");
+          });
         });
     });
   },
