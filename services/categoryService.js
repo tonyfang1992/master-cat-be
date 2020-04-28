@@ -260,6 +260,34 @@ const categoryService = {
       });
     });
   },
+  getCan: (req, res, callback) => {
+    return Can.findByPk(req.params.id).then((Can) => {
+      Product.findAll({}).then((Products) => {
+        const CanProducts = Products.filter(
+          (product) => product.CanId == req.params.id
+        );
+
+        let CanTopProducts = [];
+        let CanNewProducts = [];
+        CanTopProducts = CanProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        CanNewProducts = CanProducts.sort((a, b) => a.updatedAt - b.updatedAt);
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          Can,
+          CanTopProducts,
+          CanNewProducts,
+        });
+      });
+    });
+  },
 };
 
 module.exports = categoryService;
