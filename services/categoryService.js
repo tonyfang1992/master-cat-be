@@ -230,6 +230,36 @@ const categoryService = {
       });
     });
   },
+  getFeedFunction: (req, res, callback) => {
+    return FeedFunction.findByPk(req.params.id).then((FeedFunction) => {
+      Product.findAll({}).then((Products) => {
+        const FeedFunctionProducts = Products.filter(
+          (product) => product.FeedFunctionId == req.params.id
+        );
+
+        let FeedFunctionTopProducts = [];
+        let FeedFunctionNewProducts = [];
+        FeedFunctionTopProducts = FeedFunctionProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        FeedFunctionNewProducts = FeedFunctionProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          FeedFunction,
+          FeedFunctionTopProducts,
+          FeedFunctionNewProducts,
+        });
+      });
+    });
+  },
 };
 
 module.exports = categoryService;

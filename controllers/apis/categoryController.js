@@ -39,6 +39,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getFeedFunction: (req, res) => {
+    categoryService.getFeedFunction(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;

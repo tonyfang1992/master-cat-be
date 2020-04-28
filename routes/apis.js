@@ -47,6 +47,7 @@ router.get("/thisweekactivity/:id", categoryController.getThisWeekActivity);
 router.get("/newactivity/:id", categoryController.getNewActivity);
 router.get("/feed/:id", categoryController.getFeed);
 router.get("/feedage/:id", categoryController.getFeedAge);
+router.get("/feedfunction/:id", categoryController.getFeedFunction);
 
 router.get("/admin/CreateProduct", adminController.getCreateProduct);
 router.get("/admin/store", adminController.getStore);
