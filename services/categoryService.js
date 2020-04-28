@@ -4,14 +4,36 @@ const Category = db.Category;
 const SubCategory = db.SubCategory;
 const ThisWeekActivity = db.ThisWeekActivity;
 const NewActivity = db.NewActivity;
+const Can = db.Can;
+const CanType = db.CanType;
+const Feed = db.Feed;
+const FeedAge = db.FeedAge;
+const FeedFunction = db.FeedFunction;
 
 const categoryService = {
   getMenu: (req, res, callback) => {
     return ThisWeekActivity.findAll().then((ThisWeekActivities) => {
       NewActivity.findAll().then((NewActivities) => {
-        callback({
-          ThisWeekActivities: JSON.parse(JSON.stringify(ThisWeekActivities)),
-          NewActivities: JSON.parse(JSON.stringify(NewActivities)),
+        Can.findAll().then((Cans) => {
+          CanType.findAll().then((CanTypes) => {
+            Feed.findAll().then((Feeds) => {
+              FeedAge.findAll().then((FeedAges) => {
+                FeedFunction.findAll().then((FeedFunctions) => {
+                  callback({
+                    ThisWeekActivities: JSON.parse(
+                      JSON.stringify(ThisWeekActivities)
+                    ),
+                    NewActivities: JSON.parse(JSON.stringify(NewActivities)),
+                    Cans,
+                    CanTypes,
+                    Feeds,
+                    FeedAges,
+                    FeedFunctions,
+                  });
+                });
+              });
+            });
+          });
         });
       });
     });
@@ -144,6 +166,36 @@ const categoryService = {
           NewActivityNewProducts: JSON.parse(
             JSON.stringify(NewActivityNewProducts)
           ),
+        });
+      });
+    });
+  },
+  getFeed: (req, res, callback) => {
+    return Feed.findByPk(req.params.id).then((Feed) => {
+      Product.findAll({}).then((Products) => {
+        const FeedProducts = Products.filter(
+          (product) => product.FeedId == req.params.id
+        );
+
+        let FeedTopProducts = [];
+        let FeedNewProducts = [];
+        FeedTopProducts = FeedProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        FeedNewProducts = FeedProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          Feed: JSON.parse(JSON.stringify(Feed)),
+          FeedTopProducts,
+          FeedNewProducts,
         });
       });
     });

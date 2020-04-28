@@ -29,6 +29,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getFeed: (req, res) => {
+    categoryService.getFeed(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
