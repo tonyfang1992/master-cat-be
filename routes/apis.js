@@ -49,6 +49,7 @@ router.get("/feed/:id", categoryController.getFeed);
 router.get("/feedage/:id", categoryController.getFeedAge);
 router.get("/feedfunction/:id", categoryController.getFeedFunction);
 router.get("/can/:id", categoryController.getCan);
+router.get("/cantype/:id", categoryController.getCanType);
 
 router.get("/admin/CreateProduct", adminController.getCreateProduct);
 router.get("/admin/store", adminController.getStore);

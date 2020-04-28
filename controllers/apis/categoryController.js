@@ -49,6 +49,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getCanType: (req, res) => {
+    categoryService.getCanType(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
