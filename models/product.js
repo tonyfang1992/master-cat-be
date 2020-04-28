@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       ThisWeekActivityId: DataTypes.INTEGER,
       CategoryId: DataTypes.INTEGER,
       SubcategoryId: DataTypes.INTEGER,
+      CanId: DataTypes.INTEGER,
+      FeedId: DataTypes.INTEGER,
     },
     {}
   );

@@ -47,6 +47,21 @@ module.exports = {
       SubcategoryId: {
         type: Sequelize.INTEGER,
       },
+      CanId: {
+        type: Sequelize.INTEGER,
+      },
+      CanTypeId: {
+        type: Sequelize.INTEGER,
+      },
+      FeedId: {
+        type: Sequelize.INTEGER,
+      },
+      FeedAgeId: {
+        type: Sequelize.INTEGER,
+      },
+      FeedFunctionId: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
