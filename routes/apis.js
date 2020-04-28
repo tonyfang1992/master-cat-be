@@ -19,6 +19,7 @@ router.post("/signup", userController.signUp);
 router.get("/profile/:id", userController.getUser);
 router.get("/get_current_user", authenticated, userController.getCurrentUser);
 
+router.get("/cat/:id", authenticated, catController.getCat);
 router.post("/cat", authenticated, catController.postCat);
 router.put("/cat", authenticated, catController.putCat);
 

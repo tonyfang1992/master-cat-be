@@ -2,6 +2,83 @@ const db = require("../models");
 const Cat = db.Cat;
 
 const catService = {
+  getCat: (req, res, callback) => {
+    Cat.findOne({ where: { UserId: req.params.id } }).then((cat) => {
+      let FeedAge = [];
+      let FeedFunction = [];
+      if (cat == null) {
+        return callback({ FeedAge, FeedFunction, cat });
+      } else {
+        if (cat.age < 2) {
+          FeedAge.push({ id: 1, age: "幼貓飼料" });
+          FeedAge.push({ id: 4, age: "全齡貓飼料" });
+        }
+        if (1 < cat.age && cat.age < 8) {
+          if (cat.gender == "男生") {
+            if (6 < cat.weight) {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+              FeedFunction.push({
+                id: 1,
+                function: "低卡飼料推薦",
+                description: "貓咪有點過重囉!",
+              });
+            } else {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+            }
+          } else {
+            if (5 < cat.weight) {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+              FeedFunction.push({
+                id: 1,
+                function: "低卡飼料推薦",
+                description: "貓咪有點過重囉! 若為懷孕母貓則沒關係唷。",
+              });
+            } else {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+            }
+          }
+        }
+        if (7 < cat.age) {
+          if (cat.gender == "男生") {
+            if (6 < cat.weight) {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+              FeedFunction.push({ id: 1, function: "低卡飼料推薦" });
+            } else {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedFunction.push({
+                id: 2,
+                function: "腸胃保健飼料推薦",
+                description: "即將進入中老年，腸胃也要顧喔!",
+              });
+            }
+          } else {
+            if (5 < cat.weight) {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+              FeedFunction.push({
+                id: 1,
+                function: "低卡飼料推薦",
+                description: "貓咪有點過重囉! 若為懷孕母貓則沒關係唷。",
+              });
+            } else {
+              FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
+              FeedFunction.push({
+                id: 2,
+                function: "腸胃保健飼料推薦",
+                description: "即將進入中老年，腸胃也要顧喔!",
+              });
+            }
+          }
+        }
+        return callback({ FeedAge, FeedFunction, cat });
+      }
+    });
+  },
   postCat: (req, res, callback) => {
     Cat.create({
       name: req.body.name,
