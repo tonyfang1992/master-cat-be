@@ -351,6 +351,248 @@ module.exports = {
       ],
       {}
     );
+    queryInterface.bulkInsert(
+      "Cans",
+      [
+        {
+          brand: "惜時 SEEDS 貓罐頭",
+          description:
+            "台灣惜時SEEDS，高CP質的餐罐代表，從嚴選食材到完成製罐，由全球性上櫃上市的工廠製造，全新配方比例再晉級，營養又補水!‎",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "PekoPeko 沛可",
+          description:
+            "細緻好吞食的湯狀罐 體貼牙口不佳的老幼毛孩! 鱉蛋粉豐富卵磷脂 幫助毛髮蓬蓬滑順!",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "KATTOVIT 康特維",
+          description:
+            "德國進口 獸醫推薦! 針對各種需求的貓咪處方食品 全系列產品：腎臟保健、泌尿保健、腸胃保健、體重管理及低敏配方",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "Royal Canin 法國皇家",
+          description:
+            "奧地利原裝進口，依循皇家乾糧精神，為毛孩需求量身訂製的專屬營養，質地細緻營養更好吸收!",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "FirstMate 第一饗宴",
+          description: "加拿大頂級楓味 WDJ連年推薦 無穀貓咪主食罐",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "原燒",
+          description:
+            "原燒 貓罐頭原燒 貓罐頭原燒 貓罐頭原燒 貓罐頭原燒 貓罐頭!",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+    queryInterface.bulkInsert(
+      "CanTypes",
+      [
+        {
+          type: "主食罐",
+          description: "頂級貓咪主食罐推薦",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          type: "副食罐",
+          description:
+            "可以做為額外水分營養補充、獎勵訓練、提振食慾、拌飼料用的美味副食點心罐頭",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+    queryInterface.bulkInsert(
+      "Feeds",
+      [
+        {
+          brand: "原點(本能) Instinct ",
+          description:
+            "原點(本能) Instinct WDJ連續推薦貓咪飼料!美國第一鮮肉無穀低穀飼料領導品牌，原點完美保留原始營養的鮮肉凍乾肉塊與專利純肉噴灑技術，原點保留100%營養，就像餐餐吃鮮肉!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "愛酪麗 AvoDerm",
+          description:
+            "含有3倍omega的超級蔬果-酪梨油，是追求皮膚健康、腸胃勇健和毛髮亮麗的毛孩最需要的主食!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "ZiwiPeak 巔峰",
+          description:
+            "超過96%鮮肉含量 AIR-DRIED 30℃ 自然風乾技術 將三倍營養濃縮鎖入每一份巔峰鮮肉糧!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "安娜美廚 Annamaet",
+          description:
+            "安娜瑪特回來了！全球百萬飼主,WDJ,FDA齊力推薦！冠軍犬貓的頂級乾糧食譜！",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "第一饗宴 FirstMate",
+          description:
+            "北美第一間無穀飼料開創者! 100%自家工廠生產+純天然原料，低敏好消化!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "黑鷹 BlackHawk",
+          description:
+            "黑鷹 BlackHawk 貓咪無穀/低穀飼料 全世界唯一添加澳洲'鴯鶓油'的毛孩飼料! 推薦 BlackHawk黑鷹 全系列富含液態黃金鴯鶓油，70%不飽和脂肪酸，最適合毛孩吸收，保護毛孩心腦血管!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "GHR 健康主義",
+          description:
+            "紐西蘭符合AAFCO標準健康糧，添加蔓越莓、百里香等7種天然草本，均衡營養，腸胃好棒!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "KitCat",
+          description:
+            "紐西蘭符合AAFCO標準健康糧，添加蔓越莓、百里香等7種天然草本，均衡營養，腸胃好棒!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "ANF 愛恩富",
+          description:
+            "ANF 愛恩富 貓飼料 適口性佳，容易消化， 提供三重蛋白質（雞肉，雞蛋，魚）給您的毛小孩最完整均衡的營養",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "藍饌 Blue Buffalo",
+          description:
+            "北美銷售第一天然寵糧，採用兩種顆粒增強營養；獨家”冷製法”製造的LifeSource Bits®抗氧顆粒提供了增強健康的營養補給。",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "卡比 Canidae",
+          description:
+            "卡比採用簡單的原料配方，使用鮮肉和天然食材，添加寵物生長必需的維他命和礦物質，讓您的愛寵健康長久陪伴您！",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "Orijen 渴望",
+          description:
+            "全網最便宜! 渴望 Orijen 貓飼料 WDJ推薦! 地表最強無穀貓飼料，85%超高鮮肉含量，新鮮區域原物料如同大自然供給，提供最天然、豐富的營養素。",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          brand: "法國皇家 RoyalCanin",
+          description:
+            "法國皇家 RoyalCanin 以超過50年的專業營養經驗，致力於臨床實證以及科學研究，用心調配確保貓犬獲得各個成長階段所需的專屬營養，維持寵物健康最佳狀態!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+    queryInterface.bulkInsert(
+      "FeedAges",
+      [
+        {
+          age: "幼貓",
+          description:
+            "針對1歲以下發育期幼貓、懷孕期母貓所設計的高營養需求配方飼料",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          age: "成貓",
+          description: "針對1歲以上成年貓咪需求的全方位均衡營養飼料",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          age: "老貓",
+          description: "滿足7歲以上熟齡貓所需的低卡低脂、低負擔的樂齡飼料配方",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          age: "全齡貓",
+          description:
+            "店長為你篩選了全年齡階段都適合的全方位配方，是貓咪可以從小吃到老的均衡型乾糧!",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
+    queryInterface.bulkInsert(
+      "FeedFunctions",
+      [
+        {
+          function: "貓咪體重控制、低卡飼料推薦",
+          description: "特別為需要控制體重的貓咪所精選的低卡低負擔配方飼料",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          function: "貓咪腸胃保健型飼料推薦",
+          description:
+            "針對容易軟便、腸胃消化較弱的貓咪所精選，添加益生菌或使用單一動物蛋白的低敏感飼料配方",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          function: "貓咪泌尿保健型飼料",
+          description: "針對貓咪容易有的結石、泌尿道問題所調配的泌尿保健型飼料",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          function: "無穀貓咪飼料推薦",
+          description: "更多首頁沒有的隱藏版貓咪無穀飼料品牌推薦!",
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
     return queryInterface.bulkInsert(
       "Products",
       Array.from({ length: 50 }).map((d) => ({
@@ -368,6 +610,11 @@ module.exports = {
         NewActivityId: Math.floor(Math.random() * 5) + 1,
         CategoryId: Math.floor(Math.random() * 6) + 1,
         SubcategoryId: Math.floor(Math.random() * 13) + 1,
+        CanId: Math.floor(Math.random() * 6) + 1,
+        CanTypeId: Math.floor(Math.random() * 2) + 1,
+        FeedId: Math.floor(Math.random() * 13) + 1,
+        FeedAgeId: Math.floor(Math.random() * 4) + 1,
+        FeedFunctionId: Math.floor(Math.random() * 4) + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       })),
@@ -382,6 +629,11 @@ module.exports = {
     queryInterface.bulkDelete("NewActivities", null, {});
     queryInterface.bulkDelete("Subcategories", null, {});
     queryInterface.bulkDelete("Categories", null, {});
+    queryInterface.bulkDelete("Cans", null, {});
+    queryInterface.bulkDelete("CanTypes", null, {});
+    queryInterface.bulkDelete("Feeds", null, {});
+    queryInterface.bulkDelete("FeedAges", null, {});
+    queryInterface.bulkDelete("FeedFunctions", null, {});
     return queryInterface.bulkDelete("Products", null, {});
   },
 };
