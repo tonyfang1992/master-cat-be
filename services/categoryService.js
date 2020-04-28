@@ -193,9 +193,39 @@ const categoryService = {
         callback({
           TopProducts: JSON.parse(JSON.stringify(TopProducts)),
           NewProducts: JSON.parse(JSON.stringify(NewProducts)),
-          Feed: JSON.parse(JSON.stringify(Feed)),
+          Feed,
           FeedTopProducts,
           FeedNewProducts,
+        });
+      });
+    });
+  },
+  getFeedAge: (req, res, callback) => {
+    return FeedAge.findByPk(req.params.id).then((FeedAge) => {
+      Product.findAll({}).then((Products) => {
+        const FeedAgeProducts = Products.filter(
+          (product) => product.FeedAgeId == req.params.id
+        );
+
+        let FeedAgeTopProducts = [];
+        let FeedAgeNewProducts = [];
+        FeedAgeTopProducts = FeedAgeProducts.sort(
+          (a, b) => b.SaleAmount - a.SaleAmount
+        );
+        FeedAgeNewProducts = FeedAgeProducts.sort(
+          (a, b) => a.updatedAt - b.updatedAt
+        );
+
+        let TopProducts = [];
+        let NewProducts = [];
+        TopProducts = Products.sort((a, b) => b.SaleAmount - a.SaleAmount);
+        NewProducts = Products.sort((a, b) => a.updatedAt - b.updatedAt);
+        callback({
+          TopProducts: JSON.parse(JSON.stringify(TopProducts)),
+          NewProducts: JSON.parse(JSON.stringify(NewProducts)),
+          FeedAge,
+          FeedAgeTopProducts,
+          FeedAgeNewProducts,
         });
       });
     });

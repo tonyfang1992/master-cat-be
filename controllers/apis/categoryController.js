@@ -34,6 +34,11 @@ const categoryController = {
       return res.json(data);
     });
   },
+  getFeedAge: (req, res) => {
+    categoryService.getFeedAge(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = categoryController;
