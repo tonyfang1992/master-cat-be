@@ -5,15 +5,16 @@ const Order = db.Order;
 const OrderItem = db.OrderItem;
 const Product = db.Product;
 const crypto = require("crypto");
+const User = db.User;
 
-const URL = "https://5f2aa841.ngrok.io";
+const URL = "https://e4378e1f.ngrok.io";
 const MerchantID = process.env.MERCHANT_ID;
 const HashKey = process.env.HASH_KEY;
 const HashIV = process.env.HASH_IV;
 const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
 const ReturnURL = URL + "/api/spgateway/callback";
 const NotifyURL = URL + "/api/spgateway/callback";
-const ClientBackURL = "https://22a14cdb.ngrok.io" + "/cats";
+const ClientBackURL = "https://8ed4a633.ngrok.io" + "/cats";
 
 function genDataChain(TradeInfo) {
   let results = [];
@@ -107,6 +108,21 @@ const OrderService = {
     });
   },
   postOrder: (req, res, callback) => {
+    //重新檢查一次前端傳來資料
+    if (
+      req.body.name.length == 0 ||
+      req.body.address.length == 0 ||
+      req.body.phone.length == 0
+    ) {
+      return callback({ status: "error", message: "所有欄位都是必填" });
+    }
+    if (typeof req.body.phone !== Number || this.phone.length !== 10) {
+      return callback({
+        status: "error",
+        message: "電話欄只能輸入長度為10的數字!",
+      });
+    }
+    //將購物車資料轉換成訂單
     return Cart.findOne({
       where: { uuid: req.body.cartId },
       include: "items",
@@ -118,10 +134,12 @@ const OrderService = {
         shipping_status: 0,
         payment_status: "尚未付款",
         UserId: req.body.userId,
-        amount: req.body.amount,
       }).then((order) => {
         var results = [];
+        let totalPrice = 0;
         for (var i = 0; i < cart.items.length; i++) {
+          //價錢由後端重新計算一次
+          totalPrice += cart.items[i].CartItem.quantity * cart.items[i].price;
           results.push(
             OrderItem.create({
               OrderId: order.id,
@@ -131,6 +149,11 @@ const OrderService = {
             })
           );
         }
+        //更新訂單價錢
+        order.update({
+          ...order,
+          amount: totalPrice,
+        });
 
         return Promise.all(results).then(() =>
           cart
@@ -143,10 +166,10 @@ const OrderService = {
     });
   },
   cancelOrder: (req, res, callback) => {
-    return Order.findByPk(req.params.id).then((order) => {
+    Order.findByPk(req.params.id).then((order) => {
       order
         .update({
-          shipping_status: "-1",
+          shipping_status: "取消訂單",
           payment_status: "取消訂單",
         })
         .then((order) => {
@@ -183,11 +206,12 @@ const OrderService = {
     return Order.findAll({
       where: { sn: data["Result"]["MerchantOrderNo"] },
     }).then((orders) => {
-      //if 或訂單成立時扣庫存，(1.重複發2.沒收到 timeout  3.定時檢查有沒有成功)
+      //判斷付款狀態，藍新會重複發送post，以確認伺服器狀態
       if (orders[0].payment_status !== "完成付款") {
         return OrderItem.findAll({
           where: { OrderId: orders[0].id },
         }).then((orderItems) => {
+          //扣掉庫存、增加銷售量
           for (let i = 0; i < orderItems.length; i++) {
             Product.findByPk(orderItems[i].ProductId).then((product) => {
               product.update({
@@ -197,14 +221,32 @@ const OrderService = {
               });
             });
           }
-          orders[0]
-            .update({
-              ...req.body,
-              payment_status: "完成付款",
-            })
-            .then((order) => {
-              return res.redirect("http://localhost:8080/#/");
-            });
+          //更新消費者的累積消費金額、會員階級
+          User.findByPk(orders[0].UserId).then((user) => {
+            let NowSpendMoney = (user.spendMoney += orders[0].amount);
+            let NowRank = user.rank;
+            if (3000 < NowSpendMoney < 6667) {
+              NowRank = "白銀會員";
+            }
+            if (6666 < NowSpendMoney) {
+              NowRank = "黃金會員";
+            }
+            user
+              .update({
+                spendMoney: NowSpendMoney,
+                rank: NowRank,
+              })
+              .then((user) => {
+                orders[0]
+                  .update({
+                    ...req.body,
+                    payment_status: "完成付款",
+                  })
+                  .then((order) => {
+                    return res.redirect("http://localhost:8080/#/");
+                  });
+              });
+          });
         });
       } else {
         return res.redirect("http://localhost:8080/#/");

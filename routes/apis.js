@@ -51,7 +51,7 @@ router.delete("/cartItem/:id", cartController.deleteCartItem);
 //需登入才能成立、查詢訂單
 router.get("/orders/:id", authenticated, orderController.getOrders);
 router.post("/order", authenticated, orderController.postOrder);
-router.post("/order/:id/cancel", authenticated, orderController.cancelOrder);
+router.delete("/order/:id/cancel", authenticated, orderController.cancelOrder);
 router.get("/order/:id/payment", authenticated, orderController.getPayment);
 router.post("/spgateway/callback", orderController.spgatewayCallback);
 
