@@ -4,9 +4,15 @@ const Cat = db.Cat;
 
 const userService = {
   getUser: (req, res, callback) => {
-    return User.findByPk(req.params.id, { include: [Cat] }).then((user) => {
-      callback({ user: user });
-    });
+    if (Number(req.user.id) === Number(req.params.id)) {
+      return User.findByPk(req.params.id, { include: [Cat] }).then((user) => {
+        callback({ user });
+      });
+    } else {
+      return User.findByPk(req.user.id).then((user) => {
+        callback({ user });
+      });
+    }
   },
 };
 
