@@ -6,14 +6,14 @@ const OrderItem = db.OrderItem;
 const Product = db.Product;
 const crypto = require("crypto");
 
-const URL = "https://8b29f30f.ngrok.io";
+const URL = "https://5f2aa841.ngrok.io";
 const MerchantID = process.env.MERCHANT_ID;
 const HashKey = process.env.HASH_KEY;
 const HashIV = process.env.HASH_IV;
 const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
 const ReturnURL = URL + "/api/spgateway/callback";
 const NotifyURL = URL + "/api/spgateway/callback";
-const ClientBackURL = "https://631c5be5.ngrok.io" + "/cats";
+const ClientBackURL = "https://22a14cdb.ngrok.io" + "/cats";
 
 function genDataChain(TradeInfo) {
   let results = [];
@@ -116,7 +116,7 @@ const OrderService = {
         address: req.body.address,
         phone: req.body.phone,
         shipping_status: 0,
-        payment_status: 0,
+        payment_status: "尚未付款",
         UserId: req.body.userId,
         amount: req.body.amount,
       }).then((order) => {
@@ -147,7 +147,7 @@ const OrderService = {
       order
         .update({
           shipping_status: "-1",
-          payment_status: "-1",
+          payment_status: "取消訂單",
         })
         .then((order) => {
           callback({ status: "success", message: "成功取消訂單" });
@@ -183,27 +183,32 @@ const OrderService = {
     return Order.findAll({
       where: { sn: data["Result"]["MerchantOrderNo"] },
     }).then((orders) => {
-      orders[0]
-        .update({
-          ...req.body,
-          payment_status: 1,
-        })
-        .then((order) => {
-          return OrderItem.findAll({
-            where: { OrderId: order.id },
-          }).then((orderItems) => {
-            for (let i = 0; i < orderItems.length; i++) {
-              Product.findByPk(orderItems[i].ProductId).then((product) => {
-                product.update({
-                  ...product,
-                  amount: product.amount - orderItems[i].quantity,
-                  SaleAmount: product.SaleAmount + orderItems[i].quantity,
-                });
+      //if 或訂單成立時扣庫存，(1.重複發2.沒收到 timeout  3.定時檢查有沒有成功)
+      if (orders[0].payment_status !== "完成付款") {
+        return OrderItem.findAll({
+          where: { OrderId: orders[0].id },
+        }).then((orderItems) => {
+          for (let i = 0; i < orderItems.length; i++) {
+            Product.findByPk(orderItems[i].ProductId).then((product) => {
+              product.update({
+                ...product,
+                amount: product.amount - orderItems[i].quantity,
+                SaleAmount: product.SaleAmount + orderItems[i].quantity,
               });
-            }
-            return res.redirect("http://localhost:8080/#/");
-          });
+            });
+          }
+          orders[0]
+            .update({
+              ...req.body,
+              payment_status: "完成付款",
+            })
+            .then((order) => {
+              return res.redirect("http://localhost:8080/#/");
+            });
         });
+      } else {
+        return res.redirect("http://localhost:8080/#/");
+      }
     });
   },
 };
