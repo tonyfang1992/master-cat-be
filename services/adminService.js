@@ -4,6 +4,11 @@ const SubCategory = db.SubCategory;
 const ThisWeekActivity = db.ThisWeekActivity;
 const NewActivity = db.NewActivity;
 const Product = db.Product;
+const Can = db.Can;
+const CanType = db.CanType;
+const Feed = db.Feed;
+const FeedAge = db.FeedAge;
+const FeedFunction = db.FeedFunction;
 
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -14,11 +19,26 @@ const AdminService = {
       SubCategory.findAll().then((SubCategories) => {
         ThisWeekActivity.findAll().then((ThisWeekActivities) => {
           NewActivity.findAll().then((NewActivities) => {
-            return callback({
-              Categories,
-              SubCategories,
-              ThisWeekActivities,
-              NewActivities,
+            Can.findAll().then((Cans) => {
+              CanType.findAll().then((CanTypes) => {
+                Feed.findAll().then((Feeds) => {
+                  FeedAge.findAll().then((FeedAges) => {
+                    FeedFunction.findAll().then((FeedFunctions) => {
+                      return callback({
+                        Categories,
+                        SubCategories,
+                        ThisWeekActivities,
+                        NewActivities,
+                        Cans,
+                        CanTypes,
+                        Feeds,
+                        FeedAges,
+                        FeedFunctions,
+                      });
+                    });
+                  });
+                });
+              });
             });
           });
         });
