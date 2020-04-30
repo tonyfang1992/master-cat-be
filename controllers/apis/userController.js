@@ -66,6 +66,7 @@ let userController = {
               null
             ),
             role: req.body.role,
+            rank: "一般會員",
           }).then((user) => {
             return res.json({ status: "success", message: "成功註冊帳號！" });
           });

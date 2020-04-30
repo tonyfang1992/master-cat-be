@@ -10,6 +10,7 @@ const Feed = db.Feed;
 const FeedAge = db.FeedAge;
 const FeedFunction = db.FeedFunction;
 const Order = db.Order;
+const User = db.User;
 
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -344,9 +345,21 @@ const AdminService = {
       return callback({ orders });
     });
   },
+  getUsers: (req, res, callback) => {
+    User.findAll().then((users) => {
+      return callback({ users });
+    });
+  },
   deleteOrder: (req, res, callback) => {
     Order.findByPk(req.params.id).then((order) => {
       order
+        .destroy()
+        .then(() => callback({ status: "success", message: "成功刪除訂單" }));
+    });
+  },
+  deleteUser: (req, res, callback) => {
+    User.findByPk(req.params.id).then((user) => {
+      user
         .destroy()
         .then(() => callback({ status: "success", message: "成功刪除訂單" }));
     });

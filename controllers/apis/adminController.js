@@ -42,8 +42,18 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getUsers: (req, res) => {
+    adminService.getUsers(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   deleteOrder: (req, res) => {
     adminService.deleteOrder(req, res, (data) => {
+      return res.json(data);
+    });
+  },
+  deleteUser: (req, res) => {
+    adminService.deleteUser(req, res, (data) => {
       return res.json(data);
     });
   },

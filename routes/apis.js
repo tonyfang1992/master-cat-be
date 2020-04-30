@@ -98,6 +98,18 @@ router.get(
   authenticatedAdmin,
   adminController.getStore
 );
+router.get(
+  "/admin/users",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getUsers
+);
+router.delete(
+  "/admin/users/:id",
+  authenticated,
+  authenticatedAdmin,
+  adminController.deleteUser
+);
 router.post(
   "/admin/NewProduct",
   authenticated,
