@@ -87,6 +87,11 @@ let userController = {
       role: req.user.role,
     });
   },
+  postUser: (req, res) => {
+    userService.postUser(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = userController;

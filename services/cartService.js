@@ -1,10 +1,10 @@
 const db = require("../models");
 const Cart = db.Cart;
 const CartItem = db.CartItem;
+const User = db.User;
 
 const CartService = {
   getCart: (req, res, callback) => {
-    console.log(req.params.id);
     return Cart.findOne({
       where: { uuid: req.params.id },
       include: "items",
@@ -19,6 +19,27 @@ const CartService = {
       return callback({
         cart,
         totalPrice,
+      });
+    });
+  },
+  getCheckoutCart: (req, res, callback) => {
+    return Cart.findOne({
+      where: { uuid: req.params.id },
+      include: "items",
+    }).then((cart) => {
+      cart = cart || { items: [] };
+      let totalPrice =
+        cart.items.length > 0
+          ? cart.items
+              .map((d) => d.price * d.CartItem.quantity)
+              .reduce((a, b) => a + b)
+          : 0;
+      User.findByPk(req.user.id).then((user) => {
+        return callback({
+          cart,
+          totalPrice,
+          user,
+        });
       });
     });
   },

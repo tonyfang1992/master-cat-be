@@ -31,6 +31,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.post("/signin", userController.signIn);
 router.post("/signup", userController.signUp);
 router.get("/profile/:id", authenticated, userController.getUser);
+router.post("/profile", authenticated, userController.postUser);
 router.get("/get_current_user", authenticated, userController.getCurrentUser);
 
 router.get("/cat/:id", authenticated, catController.getCat);
@@ -44,6 +45,7 @@ router.get("/products/hot", productController.getHotProducts);
 router.get("/products/:id", productController.getProduct);
 //沒有登入情況下，也能將商品加入購物車
 router.get("/cart/:id", cartController.getCart);
+router.get("/checkout/:id", authenticated, cartController.getCheckoutCart);
 router.post("/cart", cartController.postCart);
 router.post("/cartItem/:id/add", cartController.addCartItem);
 router.post("/cartItem/:id/sub", cartController.subCartItem);

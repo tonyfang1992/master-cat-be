@@ -7,6 +7,11 @@ const CartController = {
       return res.json(data);
     });
   },
+  getCheckoutCart: (req, res) => {
+    cartService.getCheckoutCart(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   postCart: (req, res) => {
     cartService.postCart(req, res, (data) => {
       return res.json(data);
