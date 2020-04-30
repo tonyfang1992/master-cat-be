@@ -9,6 +9,7 @@ const CanType = db.CanType;
 const Feed = db.Feed;
 const FeedAge = db.FeedAge;
 const FeedFunction = db.FeedFunction;
+const Order = db.Order;
 
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -336,6 +337,18 @@ const AdminService = {
       attributes: ["id", "SubcategoryId", "name", "amount", "SaleAmount"],
     }).then((products) => {
       callback({ products });
+    });
+  },
+  getOrders: (req, res, callback) => {
+    Order.findAll().then((orders) => {
+      return callback({ orders });
+    });
+  },
+  deleteOrder: (req, res, callback) => {
+    Order.findByPk(req.params.id).then((order) => {
+      order
+        .destroy()
+        .then(() => callback({ status: "success", message: "成功刪除訂單" }));
     });
   },
 };

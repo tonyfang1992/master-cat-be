@@ -81,6 +81,18 @@ router.get(
   adminController.getEditProduct
 );
 router.get(
+  "/admin/orders",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getOrders
+);
+router.delete(
+  "/admin/orders/:id",
+  authenticated,
+  authenticatedAdmin,
+  adminController.deleteOrder
+);
+router.get(
   "/admin/store",
   authenticated,
   authenticatedAdmin,
