@@ -45,6 +45,40 @@ const AdminService = {
       });
     });
   },
+  getEditProduct: (req, res, callback) => {
+    return Category.findAll().then((Categories) => {
+      SubCategory.findAll().then((SubCategories) => {
+        ThisWeekActivity.findAll().then((ThisWeekActivities) => {
+          NewActivity.findAll().then((NewActivities) => {
+            Can.findAll().then((Cans) => {
+              CanType.findAll().then((CanTypes) => {
+                Feed.findAll().then((Feeds) => {
+                  FeedAge.findAll().then((FeedAges) => {
+                    FeedFunction.findAll().then((FeedFunctions) => {
+                      Product.findByPk(req.params.id).then((product) => {
+                        return callback({
+                          Categories,
+                          SubCategories,
+                          ThisWeekActivities,
+                          NewActivities,
+                          Cans,
+                          CanTypes,
+                          Feeds,
+                          FeedAges,
+                          FeedFunctions,
+                          product,
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  },
   postNewProduct: (req, res, callback) => {
     const { file } = req;
     if (
@@ -54,8 +88,7 @@ const AdminService = {
       !req.body.specification ||
       !req.body.price ||
       !req.body.detail ||
-      !req.body.Category ||
-      !req.body.SubCategory
+      !req.body.Category
     ) {
       return callback({ status: "error", message: "表格皆須填滿" });
     }
@@ -101,6 +134,84 @@ const AdminService = {
           message: "成功新增產品",
         });
       });
+    }
+  },
+  putEditProduct: (req, res, callback) => {
+    console.log("start");
+    const { file } = req;
+    // if (
+    //   !req.body.name ||
+    //   !req.body.description ||
+    //   !req.body.amount ||
+    //   !req.body.specification ||
+    //   !req.body.price ||
+    //   !req.body.detail ||
+    //   !req.body.Category
+    // ) {
+    //   return callback({ status: "error", message: "表格皆須填滿" });
+    // }
+    console.log("0");
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        return Product.findByPk(req.params.id)
+          .then((product) => {
+            product.update({
+              name: req.body.name,
+              description: req.body.description,
+              amount: req.body.amount,
+              specification: req.body.specification,
+              detail: req.body.detail,
+              price: req.body.price,
+              image: file ? img.data.link : null,
+              CanId: req.body.CanId,
+              CanTypeId: req.body.CanTypeId,
+              FeedId: req.body.FeedId,
+              FeedAgeId: req.body.FeedAgeId,
+              FeedFunctionId: req.body.FeedFunctionId,
+              CategoryId: req.body.Category,
+              SubcategoryId: req.body.SubCategory,
+              ThisWeekActivityId: req.body.ThisWeekActivity,
+              NewActivityId: req.body.NewActivity,
+            });
+          })
+          .then((product) => {
+            callback({
+              status: "success",
+              message: "成功修改產品",
+            });
+          });
+      });
+    } else {
+      console.log("1");
+      return Product.findByPk(req.params.id)
+        .then((product) => {
+          console.log(req.body);
+          console.log(req.body.name);
+          product.update({
+            name: req.body.name,
+            detail: req.body.detail,
+            description: req.body.description,
+            amount: req.body.amount,
+            specification: req.body.specification,
+            price: req.body.price,
+            CanId: req.body.CanId,
+            CanTypeId: req.body.CanTypeId,
+            FeedId: req.body.FeedId,
+            FeedAgeId: req.body.FeedAgeId,
+            FeedFunctionId: req.body.FeedFunctionId,
+            CategoryId: req.body.Category,
+            SubcategoryId: req.body.SubCategory,
+            ThisWeekActivityId: req.body.ThisWeekActivity,
+            NewActivityId: req.body.NewActivity,
+          });
+        })
+        .then((product) => {
+          callback({
+            status: "success",
+            message: "成功修改產品",
+          });
+        });
     }
   },
   postNewActivity: (req, res, callback) => {

@@ -7,6 +7,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getEditProduct: (req, res) => {
+    adminService.getEditProduct(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   getStore: (req, res) => {
     adminService.getStore(req, res, (data) => {
       return res.json(data);
@@ -14,6 +19,11 @@ const AdminController = {
   },
   postNewProduct: (req, res) => {
     adminService.postNewProduct(req, res, (data) => {
+      return res.json(data);
+    });
+  },
+  putEditProduct: (req, res) => {
+    adminService.putEditProduct(req, res, (data) => {
       return res.json(data);
     });
   },
