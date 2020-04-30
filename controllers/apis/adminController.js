@@ -32,6 +32,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  postFeedorCan: (req, res) => {
+    adminService.postFeedorCan(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 
 module.exports = AdminController;

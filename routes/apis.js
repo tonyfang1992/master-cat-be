@@ -93,6 +93,13 @@ router.post(
   upload.single("image"),
   adminController.postNewProduct
 );
+router.post(
+  "/admin/FeedorCan",
+  authenticated,
+  authenticatedAdmin,
+  upload.single("image"),
+  adminController.postFeedorCan
+);
 router.put(
   "/admin/EditProduct/:id",
   authenticated,

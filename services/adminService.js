@@ -137,20 +137,8 @@ const AdminService = {
     }
   },
   putEditProduct: (req, res, callback) => {
-    console.log("start");
     const { file } = req;
-    // if (
-    //   !req.body.name ||
-    //   !req.body.description ||
-    //   !req.body.amount ||
-    //   !req.body.specification ||
-    //   !req.body.price ||
-    //   !req.body.detail ||
-    //   !req.body.Category
-    // ) {
-    //   return callback({ status: "error", message: "表格皆須填滿" });
-    // }
-    console.log("0");
+
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
@@ -183,7 +171,6 @@ const AdminService = {
           });
       });
     } else {
-      console.log("1");
       return Product.findByPk(req.params.id)
         .then((product) => {
           console.log(req.body);
@@ -278,6 +265,70 @@ const AdminService = {
           });
         });
       }
+    }
+  },
+  postFeedorCan: (req, res, callback) => {
+    console.log(req.body);
+    if (!req.body.name || !req.body.description || !req.body.FeedorCan) {
+      return callback({ status: "error", message: "表格皆須填滿" });
+    }
+    if (req.body.FeedorCan == 1) {
+      return Feed.create({
+        brand: req.body.name,
+        description: req.body.description,
+      }).then((can) => {
+        callback({
+          status: "success",
+          message: "成功新增飼料 (年齡品種)",
+        });
+      });
+    }
+    if (req.body.FeedorCan == 2) {
+      return FeedAge.create({
+        age: req.body.name,
+        description: req.body.description,
+      }).then((can) => {
+        callback({
+          status: "success",
+          message: "成功新增飼料 (年齡品種)",
+        });
+      });
+    }
+
+    if (req.body.FeedorCan == 3) {
+      return FeedFunction.create({
+        function: req.body.name,
+        description: req.body.description,
+      }).then((canType) => {
+        callback({
+          status: "success",
+          message: "成功新增飼料 (依功能性)",
+        });
+      });
+    }
+
+    if (req.body.FeedorCan == 4) {
+      return Can.create({
+        brand: req.body.name,
+        description: req.body.description,
+      }).then((can) => {
+        callback({
+          status: "success",
+          message: "成功新增罐頭(品牌)",
+        });
+      });
+    }
+
+    if (req.body.FeedorCan == 5) {
+      return CanType.create({
+        type: req.body.name,
+        description: req.body.description,
+      }).then((canType) => {
+        callback({
+          status: "success",
+          message: "成功新增喵喵主 / 副食罐",
+        });
+      });
     }
   },
   getStore: (req, res, callback) => {
