@@ -44,6 +44,7 @@ let userController = {
           name: user.name,
           email: user.email,
           role: user.role,
+          rank: user.rank,
         },
       });
     });
@@ -84,8 +85,8 @@ let userController = {
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
-      image: req.user.image,
       role: req.user.role,
+      rank: req.user.rank,
     });
   },
   postUser: (req, res) => {

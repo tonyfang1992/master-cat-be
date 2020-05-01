@@ -150,10 +150,17 @@ const OrderService = {
           );
         }
         //更新訂單價錢
-        order.update({
-          ...order,
-          amount: totalPrice,
-        });
+        if (totalPrice < 666) {
+          order.update({
+            ...order,
+            amount: totalPrice + 80,
+          });
+        } else {
+          order.update({
+            ...order,
+            amount: totalPrice,
+          });
+        }
 
         return Promise.all(results).then(() =>
           cart
@@ -178,21 +185,57 @@ const OrderService = {
     });
   },
   getPayment: (req, res, callback) => {
-    Order.findByPk(req.params.id, { include: "items" }).then((order) => {
-      const tradeInfo = getTradeInfo(
-        order.amount,
-        order.id,
-        "q710370@gmail.com"
-      );
-      order
-        .update({
-          ...req.body,
-          sn: tradeInfo.MerchantOrderNo,
-        })
-        .then((order) => {
-          return callback({ order, tradeInfo });
-        });
-    });
+    if (req.user.rank == "白銀會員") {
+      Order.findByPk(req.params.id, { include: "items" }).then((order) => {
+        const tradeInfo = getTradeInfo(
+          Math.floor(order.amount * 0.85),
+          order.id,
+          "q710370@gmail.com"
+        );
+        order
+          .update({
+            ...req.body,
+            sn: tradeInfo.MerchantOrderNo,
+          })
+          .then((order) => {
+            return callback({ order, tradeInfo });
+          });
+      });
+    }
+    if (req.user.rank == "黃金會員") {
+      Order.findByPk(req.params.id, { include: "items" }).then((order) => {
+        const tradeInfo = getTradeInfo(
+          Math.floor(order.amount * 0.75),
+          order.id,
+          "q710370@gmail.com"
+        );
+        order
+          .update({
+            ...req.body,
+            sn: tradeInfo.MerchantOrderNo,
+          })
+          .then((order) => {
+            return callback({ order, tradeInfo });
+          });
+      });
+    }
+    if (req.user.rank == "一般會員") {
+      Order.findByPk(req.params.id, { include: "items" }).then((order) => {
+        const tradeInfo = getTradeInfo(
+          order.amount,
+          order.id,
+          "q710370@gmail.com"
+        );
+        order
+          .update({
+            ...req.body,
+            sn: tradeInfo.MerchantOrderNo,
+          })
+          .then((order) => {
+            return callback({ order, tradeInfo });
+          });
+      });
+    }
   },
   spgatewayCallback: (req, res) => {
     console.log("===== spgatewayCallback: TradeInfo =====");
