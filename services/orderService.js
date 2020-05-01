@@ -116,7 +116,7 @@ const OrderService = {
     ) {
       return callback({ status: "error", message: "所有欄位都是必填" });
     }
-    if (typeof req.body.phone !== Number || this.phone.length !== 10) {
+    if (isNaN(req.body.phone) || req.body.phone.length !== 10) {
       return callback({
         status: "error",
         message: "電話欄只能輸入長度為10的數字!",
@@ -133,7 +133,7 @@ const OrderService = {
         phone: req.body.phone,
         shipping_status: 0,
         payment_status: "尚未付款",
-        UserId: req.body.userId,
+        UserId: req.user.id,
       }).then((order) => {
         var results = [];
         let totalPrice = 0;
