@@ -74,5 +74,28 @@ const productService = {
       });
     });
   },
+  getSearch: (req, res, callback) => {
+    return Product.findAll().then((products) => {
+      console.log(req.body);
+      let TopProducts = [];
+      let NewProducts = [];
+      let result = [];
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].name.match(req.body.search)) {
+          result.push(products[i]);
+        }
+      }
+      TopProducts = result
+        .sort((a, b) => b.SaleAmount - a.SaleAmount)
+        .slice(0, 50);
+      NewProducts = result
+        .sort((a, b) => b.createdAt - a.createdAt)
+        .slice(0, 50);
+      callback({
+        TopProducts,
+        NewProducts,
+      });
+    });
+  },
 };
 module.exports = productService;

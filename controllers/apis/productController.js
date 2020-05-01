@@ -28,5 +28,10 @@ const productController = {
       return res.json(data);
     });
   },
+  getSearch: (req, res) => {
+    productService.getSearch(req, res, (data) => {
+      return res.json(data);
+    });
+  },
 };
 module.exports = productController;

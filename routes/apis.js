@@ -43,6 +43,7 @@ router.get("/products/top", productController.getTopProducts);
 router.get("/products/new", productController.getNewProducts);
 router.get("/products/hot", productController.getHotProducts);
 router.get("/products/:id", productController.getProduct);
+router.post("/search", productController.getSearch);
 //沒有登入情況下，也能將商品加入購物車
 router.get("/cart/:id", cartController.getCart);
 router.get("/checkout/:id", authenticated, cartController.getCheckoutCart);
