@@ -13,10 +13,7 @@ const orderController = require("../controllers/apis/orderController");
 const adminController = require("../controllers/apis/adminController");
 
 const authenticated = passport.authenticate("jwt", { session: false });
-const owner = (req, res, next) => {
-  req.body.owner = req.user.id;
-  return next();
-};
+
 const authenticatedAdmin = (req, res, next) => {
   if (req.user) {
     if (req.user.role === "admin") {
