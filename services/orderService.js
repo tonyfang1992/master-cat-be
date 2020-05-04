@@ -7,14 +7,15 @@ const Product = db.Product;
 const crypto = require("crypto");
 const User = db.User;
 
-const URL = "https://e4378e1f.ngrok.io";
+const URL = process.env.URL;
 const MerchantID = process.env.MERCHANT_ID;
 const HashKey = process.env.HASH_KEY;
 const HashIV = process.env.HASH_IV;
 const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway";
 const ReturnURL = URL + "/api/spgateway/callback";
 const NotifyURL = URL + "/api/spgateway/callback";
-const ClientBackURL = "https://8ed4a633.ngrok.io" + "/cats";
+const ClientBackURL =
+  "https://tonyfang1992.github.io/master-cat-fe/#" + "/cats";
 
 function genDataChain(TradeInfo) {
   let results = [];
@@ -286,13 +287,17 @@ const OrderService = {
                     payment_status: "完成付款",
                   })
                   .then((order) => {
-                    return res.redirect("http://localhost:8080/#/");
+                    return res.redirect(
+                      "https://tonyfang1992.github.io/master-cat-fe/#/cats"
+                    );
                   });
               });
           });
         });
       } else {
-        return res.redirect("http://localhost:8080/#/");
+        return res.redirect(
+          "https://tonyfang1992.github.io/master-cat-fe/#/cats"
+        );
       }
     });
   },
