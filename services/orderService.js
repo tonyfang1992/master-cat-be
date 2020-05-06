@@ -140,6 +140,13 @@ const OrderService = {
         message: "電話欄只能輸入長度為10的數字!",
       });
     }
+    User.findByPk(req.user.id).then((user) => {
+      user.update({
+        ...user,
+        phone: req.body.phone,
+        address: req.body.address,
+      });
+    });
     //將購物車資料轉換成訂單
     return Cart.findOne({
       where: { uuid: req.body.cartId },
