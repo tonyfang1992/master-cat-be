@@ -371,7 +371,7 @@ const AdminService = {
     User.findByPk(req.params.id).then((user) => {
       user
         .destroy()
-        .then(() => callback({ status: "success", message: "成功刪除訂單" }));
+        .then(() => callback({ status: "success", message: "成功註銷使用者" }));
     });
   },
 };

@@ -94,19 +94,36 @@ function getTradeInfo(Amt, Desc, email) {
 }
 
 const OrderService = {
+  //取得所有定單
   getOrders: (req, res, callback) => {
-    Order.findAll({
-      where: { UserId: req.params.id },
-      include: "items",
-    }).then((orders) => {
-      let tradeInfo = [];
-      for (let i = 0; i < orders.length; i++) {
-        tradeInfo.push(
-          getTradeInfo(orders[i].amount, orders[i].id, "q710370@gmail.com")
-        );
-      }
-      return callback({ orders, tradeInfo });
-    });
+    //判別使用者
+    if (req.user.id == req.params.id) {
+      Order.findAll({
+        where: { UserId: req.params.id },
+        include: "items",
+      }).then((orders) => {
+        let tradeInfo = [];
+        for (let i = 0; i < orders.length; i++) {
+          tradeInfo.push(
+            getTradeInfo(orders[i].amount, orders[i].id, req.user.email)
+          );
+        }
+        return callback({ orders, tradeInfo });
+      });
+    } else {
+      Order.findAll({
+        where: { UserId: req.user.id },
+        include: "items",
+      }).then((orders) => {
+        let tradeInfo = [];
+        for (let i = 0; i < orders.length; i++) {
+          tradeInfo.push(
+            getTradeInfo(orders[i].amount, orders[i].id, req.user.email)
+          );
+        }
+        return callback({ orders, tradeInfo });
+      });
+    }
   },
   postOrder: (req, res, callback) => {
     //重新檢查一次前端傳來資料
@@ -191,7 +208,7 @@ const OrderService = {
         const tradeInfo = getTradeInfo(
           Math.floor(order.amount * 0.85),
           order.id,
-          "q710370@gmail.com"
+          req.user.email
         );
         order
           .update({
@@ -208,7 +225,7 @@ const OrderService = {
         const tradeInfo = getTradeInfo(
           Math.floor(order.amount * 0.75),
           order.id,
-          "q710370@gmail.com"
+          req.user.email
         );
         order
           .update({
@@ -222,11 +239,7 @@ const OrderService = {
     }
     if (req.user.rank == "一般會員") {
       Order.findByPk(req.params.id, { include: "items" }).then((order) => {
-        const tradeInfo = getTradeInfo(
-          order.amount,
-          order.id,
-          "q710370@gmail.com"
-        );
+        const tradeInfo = getTradeInfo(order.amount, order.id, req.user.email);
         order
           .update({
             ...req.body,

@@ -25,6 +25,7 @@ const catService = {
               });
             } else {
               FeedAge.push({ id: 2, age: "成貓飼料" });
+              FeedAge.push({ id: 4, age: "全齡貓飼料" });
             }
           } else {
             if (5 < cat.weight) {
@@ -83,7 +84,7 @@ const catService = {
     Cat.create({
       name: req.body.name,
       gender: req.body.gender,
-      UserId: req.body.UserId,
+      UserId: req.user.id,
       age: req.body.age,
       weight: req.body.weight,
     }).then((cat) => {
@@ -102,6 +103,13 @@ const catService = {
       return callback({
         status: "error",
         message: "fill all detail about cat",
+      });
+    }
+
+    if (req.body.UserId !== req.user.id) {
+      return callback({
+        status: "error",
+        message: "使用者錯誤",
       });
     }
 
