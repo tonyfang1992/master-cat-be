@@ -40,7 +40,7 @@ const categoryService = {
   },
   getCategory: (req, res, callback) => {
     return Category.findByPk(req.params.id).then((category) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const CategoryProducts = Products.filter(
           (product) => product.CategoryId == req.params.id
         );
@@ -70,7 +70,7 @@ const categoryService = {
   },
   getSubCategory: (req, res, callback) => {
     return SubCategory.findByPk(req.params.id).then((SubCategory) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const CategoryProducts = Products.filter(
           (product) => product.SubCategoryId == req.params.id
         );
@@ -104,7 +104,7 @@ const categoryService = {
   },
   getThisWeekActivity: (req, res, callback) => {
     return ThisWeekActivity.findByPk(req.params.id).then((ThisWeekActivity) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const ThisWeekActivityProducts = Products.filter(
           (product) => product.ThisWeekActivityId == req.params.id
         );
@@ -138,7 +138,7 @@ const categoryService = {
   },
   getNewActivity: (req, res, callback) => {
     return NewActivity.findByPk(req.params.id).then((NewActivity) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const NewActivityProducts = Products.filter(
           (product) => product.NewActivityId == req.params.id
         );
@@ -172,7 +172,7 @@ const categoryService = {
   },
   getFeed: (req, res, callback) => {
     return Feed.findByPk(req.params.id).then((Feed) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const FeedProducts = Products.filter(
           (product) => product.FeedId == req.params.id
         );
@@ -202,7 +202,7 @@ const categoryService = {
   },
   getFeedAge: (req, res, callback) => {
     return FeedAge.findByPk(req.params.id).then((FeedAge) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const FeedAgeProducts = Products.filter(
           (product) => product.FeedAgeId == req.params.id
         );
@@ -232,7 +232,7 @@ const categoryService = {
   },
   getFeedFunction: (req, res, callback) => {
     return FeedFunction.findByPk(req.params.id).then((FeedFunction) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const FeedFunctionProducts = Products.filter(
           (product) => product.FeedFunctionId == req.params.id
         );
@@ -262,7 +262,7 @@ const categoryService = {
   },
   getCan: (req, res, callback) => {
     return Can.findByPk(req.params.id).then((Can) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const CanProducts = Products.filter(
           (product) => product.CanId == req.params.id
         );
@@ -290,7 +290,7 @@ const categoryService = {
   },
   getCanType: (req, res, callback) => {
     return CanType.findByPk(req.params.id).then((CanType) => {
-      Product.findAll({}).then((Products) => {
+      Product.findAll({ where: { launched: true } }).then((Products) => {
         const CanTypeProducts = Products.filter(
           (product) => product.CanTypeId == req.params.id
         );

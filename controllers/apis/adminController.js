@@ -27,6 +27,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  putProductLaunched: (req, res) => {
+    adminService.putProductLaunched(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   postNewActivity: (req, res) => {
     adminService.postNewActivity(req, res, (data) => {
       return res.json(data);

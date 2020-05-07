@@ -35,6 +35,9 @@ module.exports = {
       discount: {
         type: Sequelize.INTEGER,
       },
+      launched: {
+        type: Sequelize.BOOLEAN,
+      },
       ThisWeekActivityId: {
         type: Sequelize.INTEGER,
       },

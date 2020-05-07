@@ -5,12 +5,12 @@ const SubCategory = db.SubCategory;
 
 const productService = {
   getProducts: (req, res, callback) => {
-    return Product.findAll().then((products) => {
+    return Product.findAll({ where: { launched: true } }).then((products) => {
       callback({ products: JSON.parse(JSON.stringify(products)) });
     });
   },
   getProduct: (req, res, callback) => {
-    return Product.findAll().then((Products) => {
+    return Product.findAll({ where: { launched: true } }).then((Products) => {
       let productDetail = [];
       productDetail = Products.filter((product) => product.id == req.params.id);
 
@@ -37,7 +37,7 @@ const productService = {
     });
   },
   getTopProducts: (req, res, callback) => {
-    return Product.findAll().then((products) => {
+    return Product.findAll({ where: { launched: true } }).then((products) => {
       let TopProducts = [];
       let NewProducts = [];
       TopProducts = products
@@ -53,7 +53,7 @@ const productService = {
     });
   },
   getNewProducts: (req, res, callback) => {
-    return Product.findAll().then((products) => {
+    return Product.findAll({ where: { launched: true } }).then((products) => {
       let NewProducts = [];
       NewProducts = products
         .sort((a, b) => b.createdAt - a.createdAt)
@@ -64,7 +64,7 @@ const productService = {
     });
   },
   getHotProducts: (req, res, callback) => {
-    return Product.findAll().then((products) => {
+    return Product.findAll({ where: { launched: true } }).then((products) => {
       let HotProducts = [];
       HotProducts = products
         .sort((a, b) => b.SaleAmount - a.SaleAmount)
@@ -75,7 +75,7 @@ const productService = {
     });
   },
   getSearch: (req, res, callback) => {
-    return Product.findAll().then((products) => {
+    return Product.findAll({ where: { launched: true } }).then((products) => {
       console.log(req.body);
       let TopProducts = [];
       let NewProducts = [];

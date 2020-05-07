@@ -610,6 +610,7 @@ module.exports = {
         price: faker.finance.mask(),
         detail: faker.lorem.sentence(),
         discount: 75,
+        launched: false,
         ThisWeekActivityId: Math.floor(Math.random() * 9) + 1,
         NewActivityId: Math.floor(Math.random() * 5) + 1,
         CategoryId: Math.floor(Math.random() * 6) + 1,

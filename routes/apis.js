@@ -136,5 +136,11 @@ router.post(
   upload.single("image"),
   adminController.postNewActivity
 );
+router.put(
+  "/admin/productLaunched/:id",
+  authenticated,
+  authenticatedAdmin,
+  adminController.putProductLaunched
+);
 
 module.exports = router;

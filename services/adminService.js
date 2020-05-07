@@ -106,6 +106,7 @@ const AdminService = {
           detail: req.body.detail,
           price: req.body.price,
           image: file ? img.data.link : null,
+          launched: req.body.launched,
           CanId: req.body.Can,
           CanTypeId: req.body.CanType,
           FeedId: req.body.Feed,
@@ -123,6 +124,7 @@ const AdminService = {
         });
       });
     } else {
+      console.log(req.body);
       return Product.create({
         name: req.body.name,
         detail: req.body.detail,
@@ -130,6 +132,7 @@ const AdminService = {
         amount: req.body.amount,
         specification: req.body.specification,
         price: req.body.price,
+        launched: req.body.launched,
         CanId: req.body.Can,
         CanTypeId: req.body.CanType,
         FeedId: req.body.Feed,
@@ -164,6 +167,7 @@ const AdminService = {
               detail: req.body.detail,
               price: req.body.price,
               image: file ? img.data.link : null,
+              launched: req.body.launched,
               CanId: req.body.Can,
               CanTypeId: req.body.CanType,
               FeedId: req.body.Feed,
@@ -194,6 +198,7 @@ const AdminService = {
             amount: req.body.amount,
             specification: req.body.specification,
             price: req.body.price,
+            launched: req.body.launched,
             CanId: req.body.Can,
             CanTypeId: req.body.CanType,
             FeedId: req.body.Feed,
@@ -212,6 +217,27 @@ const AdminService = {
           });
         });
     }
+  },
+  putProductLaunched: (req, res, callback) => {
+    console.log(req.user);
+    return Product.findByPk(req.params.id)
+      .then((product) => {
+        if (product.launched == true) {
+          product.update({
+            launched: false,
+          });
+        } else {
+          product.update({
+            launched: true,
+          });
+        }
+      })
+      .then((product) => {
+        callback({
+          status: "success",
+          message: "成功修改產品",
+        });
+      });
   },
   postNewActivity: (req, res, callback) => {
     const { file } = req;
@@ -345,7 +371,14 @@ const AdminService = {
   },
   getStore: (req, res, callback) => {
     return Product.findAll({
-      attributes: ["id", "SubcategoryId", "name", "amount", "SaleAmount"],
+      attributes: [
+        "id",
+        "SubcategoryId",
+        "name",
+        "amount",
+        "SaleAmount",
+        "launched",
+      ],
     }).then((products) => {
       callback({ products });
     });
