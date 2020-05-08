@@ -17,6 +17,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getEditNewActivity: (req, res) => {
+    adminService.getEditNewActivity(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   getStore: (req, res) => {
     adminService.getStore(req, res, (data) => {
       return res.json(data);
@@ -39,6 +44,11 @@ const AdminController = {
   },
   putEditThisWeekActivity: (req, res) => {
     adminService.putEditThisWeekActivity(req, res, (data) => {
+      return res.json(data);
+    });
+  },
+  putEditNewActivity: (req, res) => {
+    adminService.putEditNewActivity(req, res, (data) => {
       return res.json(data);
     });
   },

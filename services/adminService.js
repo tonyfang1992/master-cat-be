@@ -88,6 +88,13 @@ const AdminService = {
       });
     });
   },
+  getEditNewActivity: (req, res, callback) => {
+    return NewActivity.findByPk(req.params.id).then((NewActivity) => {
+      return callback({
+        NewActivity,
+      });
+    });
+  },
   postNewProduct: (req, res, callback) => {
     const { file } = req;
     if (
@@ -255,6 +262,43 @@ const AdminService = {
           });
         })
         .then((ThisWeekActivity) => {
+          callback({
+            status: "success",
+            message: "成功修改產品",
+          });
+        });
+    }
+  },
+  putEditNewActivity: (req, res, callback) => {
+    const { file } = req;
+
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        return NewActivity.findByPk(req.params.id)
+          .then((NewActivity) => {
+            NewActivity.update({
+              name: req.body.name,
+              description: req.body.description,
+              image: file ? img.data.link : null,
+            });
+          })
+          .then((NewActivity) => {
+            callback({
+              status: "success",
+              message: "成功修改產品",
+            });
+          });
+      });
+    } else {
+      return NewActivity.findByPk(req.params.id)
+        .then((NewActivity) => {
+          NewActivity.update({
+            name: req.body.name,
+            description: req.body.description,
+          });
+        })
+        .then((NewActivity) => {
           callback({
             status: "success",
             message: "成功修改產品",

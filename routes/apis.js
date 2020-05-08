@@ -66,6 +66,7 @@ router.get("/feedfunction/:id", categoryController.getFeedFunction);
 router.get("/can/:id", categoryController.getCan);
 router.get("/cantype/:id", categoryController.getCanType);
 
+//後台管理
 router.get(
   "/admin/CreateProduct",
   authenticated,
@@ -83,6 +84,12 @@ router.get(
   authenticated,
   authenticatedAdmin,
   adminController.getEditThisWeekActivity
+);
+router.get(
+  "/admin/EditNewActivity/:id",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getEditNewActivity
 );
 router.get(
   "/admin/orders",
@@ -147,6 +154,13 @@ router.put(
   authenticatedAdmin,
   upload.single("image"),
   adminController.putEditThisWeekActivity
+);
+router.put(
+  "/admin/EditNewActivity/:id",
+  authenticated,
+  authenticatedAdmin,
+  upload.single("image"),
+  adminController.putEditNewActivity
 );
 router.post(
   "/admin/NewActivity",
