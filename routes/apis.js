@@ -79,6 +79,12 @@ router.get(
   adminController.getEditProduct
 );
 router.get(
+  "/admin/EditThisWeekActivity/:id",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getEditThisWeekActivity
+);
+router.get(
   "/admin/orders",
   authenticated,
   authenticatedAdmin,
@@ -95,6 +101,12 @@ router.get(
   authenticated,
   authenticatedAdmin,
   adminController.getStore
+);
+router.get(
+  "/admin/activity",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getActivities
 );
 router.get(
   "/admin/users",
@@ -128,6 +140,13 @@ router.put(
   authenticatedAdmin,
   upload.single("image"),
   adminController.putEditProduct
+);
+router.put(
+  "/admin/EditThisWeekActivity/:id",
+  authenticated,
+  authenticatedAdmin,
+  upload.single("image"),
+  adminController.putEditThisWeekActivity
 );
 router.post(
   "/admin/NewActivity",

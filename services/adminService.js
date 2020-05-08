@@ -81,6 +81,13 @@ const AdminService = {
       });
     });
   },
+  getEditThisWeekActivity: (req, res, callback) => {
+    return ThisWeekActivity.findByPk(req.params.id).then((ThisWeekActivity) => {
+      return callback({
+        ThisWeekActivity,
+      });
+    });
+  },
   postNewProduct: (req, res, callback) => {
     const { file } = req;
     if (
@@ -218,8 +225,44 @@ const AdminService = {
         });
     }
   },
+  putEditThisWeekActivity: (req, res, callback) => {
+    const { file } = req;
+
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        return ThisWeekActivity.findByPk(req.params.id)
+          .then((ThisWeekActivity) => {
+            ThisWeekActivity.update({
+              name: req.body.name,
+              description: req.body.description,
+              image: file ? img.data.link : null,
+            });
+          })
+          .then((ThisWeekActivity) => {
+            callback({
+              status: "success",
+              message: "成功修改產品",
+            });
+          });
+      });
+    } else {
+      return ThisWeekActivity.findByPk(req.params.id)
+        .then((ThisWeekActivity) => {
+          ThisWeekActivity.update({
+            name: req.body.name,
+            description: req.body.description,
+          });
+        })
+        .then((ThisWeekActivity) => {
+          callback({
+            status: "success",
+            message: "成功修改產品",
+          });
+        });
+    }
+  },
   putProductLaunched: (req, res, callback) => {
-    console.log(req.user);
     return Product.findByPk(req.params.id)
       .then((product) => {
         if (product.launched == true) {
@@ -381,6 +424,20 @@ const AdminService = {
       ],
     }).then((products) => {
       callback({ products });
+    });
+  },
+  getActivities: (req, res, callback) => {
+    let activities = [];
+    return ThisWeekActivity.findAll({
+      attributes: ["id", "name"],
+    }).then((ThisWeekActivities) => {
+      NewActivity.findAll({
+        attributes: ["id", "name"],
+      }).then((NewActivities) => {
+        activities.push(ThisWeekActivities);
+        activities.push(NewActivities);
+        callback({ activities });
+      });
     });
   },
   getOrders: (req, res, callback) => {

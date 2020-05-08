@@ -12,8 +12,18 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getEditThisWeekActivity: (req, res) => {
+    adminService.getEditThisWeekActivity(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   getStore: (req, res) => {
     adminService.getStore(req, res, (data) => {
+      return res.json(data);
+    });
+  },
+  getActivities: (req, res) => {
+    adminService.getActivities(req, res, (data) => {
       return res.json(data);
     });
   },
@@ -24,6 +34,11 @@ const AdminController = {
   },
   putEditProduct: (req, res) => {
     adminService.putEditProduct(req, res, (data) => {
+      return res.json(data);
+    });
+  },
+  putEditThisWeekActivity: (req, res) => {
+    adminService.putEditThisWeekActivity(req, res, (data) => {
       return res.json(data);
     });
   },
