@@ -17,67 +17,187 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 const AdminService = {
   getCreateProduct: (req, res, callback) => {
-    return Category.findAll().then((Categories) => {
-      SubCategory.findAll().then((SubCategories) => {
-        ThisWeekActivity.findAll().then((ThisWeekActivities) => {
-          NewActivity.findAll().then((NewActivities) => {
-            Can.findAll().then((Cans) => {
-              CanType.findAll().then((CanTypes) => {
-                Feed.findAll().then((Feeds) => {
-                  FeedAge.findAll().then((FeedAges) => {
-                    FeedFunction.findAll().then((FeedFunctions) => {
-                      return callback({
-                        Categories,
-                        SubCategories,
-                        ThisWeekActivities,
-                        NewActivities,
-                        Cans,
-                        CanTypes,
-                        Feeds,
-                        FeedAges,
-                        FeedFunctions,
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
+    let Categories = {};
+    let SubCategories = {};
+    let ThisWeekActivities = {};
+    let NewActivities = {};
+    let Cans = {};
+    let CanTypes = {};
+    let Feeds = {};
+    let FeedAges = {};
+    let FeedFunctions = {};
+    let getCategory = new Promise((resolve, reject) => {
+      Category.findAll().then((resultCategories) => {
+        Categories = resultCategories;
+        return resolve(Categories);
+      });
+    });
+    let getSubCategory = new Promise((resolve, reject) => {
+      SubCategory.findAll().then((resultSubCategories) => {
+        SubCategories = resultSubCategories;
+        return resolve(SubCategories);
+      });
+    });
+    let getThisWeekActivity = new Promise((resolve, reject) => {
+      ThisWeekActivity.findAll().then((resultThisWeekActivities) => {
+        ThisWeekActivities = resultThisWeekActivities;
+        return resolve(ThisWeekActivities);
+      });
+    });
+    let getNewActivity = new Promise((resolve, reject) => {
+      NewActivity.findAll().then((resultNewActivities) => {
+        NewActivities = resultNewActivities;
+        return resolve(NewActivities);
+      });
+    });
+    let getCan = new Promise((resolve, reject) => {
+      Can.findAll().then((resultCans) => {
+        Cans = resultCans;
+        return resolve(Cans);
+      });
+    });
+    let getCanType = new Promise((resolve, reject) => {
+      CanType.findAll().then((resultCanTypes) => {
+        CanTypes = resultCanTypes;
+        return resolve(CanTypes);
+      });
+    });
+    let getFeed = new Promise((resolve, reject) => {
+      Feed.findAll().then((resultFeeds) => {
+        Feeds = resultFeeds;
+        return resolve(Feeds);
+      });
+    });
+    let getFeedAge = new Promise((resolve, reject) => {
+      FeedAge.findAll().then((resultFeedAges) => {
+        FeedAges = resultFeedAges;
+        return resolve(FeedAges);
+      });
+    });
+    let getFeedFunction = new Promise((resolve, reject) => {
+      FeedFunction.findAll().then((resultFeedFunctions) => {
+        FeedFunctions = resultFeedFunctions;
+        return resolve(FeedFunctions);
+      });
+    });
+    Promise.all([
+      getCategory,
+      getSubCategory,
+      getThisWeekActivity,
+      getNewActivity,
+      getCan,
+      getCanType,
+      getFeed,
+      getFeedAge,
+      getFeedFunction,
+    ]).then((result) => {
+      return callback({
+        Categories,
+        SubCategories,
+        ThisWeekActivities,
+        NewActivities,
+        Cans,
+        CanTypes,
+        Feeds,
+        FeedAges,
+        FeedFunctions,
       });
     });
   },
   getEditProduct: (req, res, callback) => {
-    return Category.findAll().then((Categories) => {
-      SubCategory.findAll().then((SubCategories) => {
-        ThisWeekActivity.findAll().then((ThisWeekActivities) => {
-          NewActivity.findAll().then((NewActivities) => {
-            Can.findAll().then((Cans) => {
-              CanType.findAll().then((CanTypes) => {
-                Feed.findAll().then((Feeds) => {
-                  FeedAge.findAll().then((FeedAges) => {
-                    FeedFunction.findAll().then((FeedFunctions) => {
-                      Product.findByPk(req.params.id).then((product) => {
-                        return callback({
-                          Categories,
-                          SubCategories,
-                          ThisWeekActivities,
-                          NewActivities,
-                          Cans,
-                          CanTypes,
-                          Feeds,
-                          FeedAges,
-                          FeedFunctions,
-                          product,
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
+    let Categories = {};
+    let SubCategories = {};
+    let ThisWeekActivities = {};
+    let NewActivities = {};
+    let Cans = {};
+    let CanTypes = {};
+    let Feeds = {};
+    let FeedAges = {};
+    let FeedFunctions = {};
+    let product = {};
+    let getCategory = new Promise((resolve, reject) => {
+      Category.findAll().then((resultCategories) => {
+        Categories = resultCategories;
+        return resolve(Categories);
+      });
+    });
+    let getSubCategory = new Promise((resolve, reject) => {
+      SubCategory.findAll().then((resultSubCategories) => {
+        SubCategories = resultSubCategories;
+        return resolve(SubCategories);
+      });
+    });
+    let getThisWeekActivity = new Promise((resolve, reject) => {
+      ThisWeekActivity.findAll().then((resultThisWeekActivities) => {
+        ThisWeekActivities = resultThisWeekActivities;
+        return resolve(ThisWeekActivities);
+      });
+    });
+    let getNewActivity = new Promise((resolve, reject) => {
+      NewActivity.findAll().then((resultNewActivities) => {
+        NewActivities = resultNewActivities;
+        return resolve(NewActivities);
+      });
+    });
+    let getCan = new Promise((resolve, reject) => {
+      Can.findAll().then((resultCans) => {
+        Cans = resultCans;
+        return resolve(Cans);
+      });
+    });
+    let getCanType = new Promise((resolve, reject) => {
+      CanType.findAll().then((resultCanTypes) => {
+        CanTypes = resultCanTypes;
+        return resolve(CanTypes);
+      });
+    });
+    let getFeed = new Promise((resolve, reject) => {
+      Feed.findAll().then((resultFeeds) => {
+        Feeds = resultFeeds;
+        return resolve(Feeds);
+      });
+    });
+    let getFeedAge = new Promise((resolve, reject) => {
+      FeedAge.findAll().then((resultFeedAges) => {
+        FeedAges = resultFeedAges;
+        return resolve(FeedAges);
+      });
+    });
+    let getFeedFunction = new Promise((resolve, reject) => {
+      FeedFunction.findAll().then((resultFeedFunctions) => {
+        FeedFunctions = resultFeedFunctions;
+        return resolve(FeedFunctions);
+      });
+    });
+    let getProduct = new Promise((resolve, reject) => {
+      Product.findByPk(req.params.id).then((resultProduct) => {
+        product = resultProduct;
+        return resolve(product);
+      });
+    });
+    Promise.all([
+      getCategory,
+      getSubCategory,
+      getThisWeekActivity,
+      getNewActivity,
+      getCan,
+      getCanType,
+      getFeed,
+      getFeedAge,
+      getFeedFunction,
+      getProduct,
+    ]).then((result) => {
+      return callback({
+        Categories,
+        SubCategories,
+        ThisWeekActivities,
+        NewActivities,
+        Cans,
+        CanTypes,
+        Feeds,
+        FeedAges,
+        FeedFunctions,
+        product,
       });
     });
   },
