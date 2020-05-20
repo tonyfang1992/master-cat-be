@@ -27,6 +27,11 @@ const AdminController = {
       return res.json(data);
     });
   },
+  getStoreByCategory: (req, res) => {
+    adminService.getStoreByCategory(req, res, (data) => {
+      return res.json(data);
+    });
+  },
   getActivities: (req, res) => {
     adminService.getActivities(req, res, (data) => {
       return res.json(data);

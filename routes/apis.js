@@ -110,6 +110,12 @@ router.get(
   adminController.getStore
 );
 router.get(
+  "/admin/store/:categoryId",
+  authenticated,
+  authenticatedAdmin,
+  adminController.getStoreByCategory
+);
+router.get(
   "/admin/activity",
   authenticated,
   authenticatedAdmin,

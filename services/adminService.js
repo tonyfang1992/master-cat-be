@@ -577,7 +577,31 @@ const AdminService = {
     }
   },
   getStore: (req, res, callback) => {
-    return Product.findAll({
+    let Categories = {};
+    let getCategory = new Promise((resolve, reject) => {
+      Category.findAll().then((resultCategories) => {
+        Categories = resultCategories;
+        return resolve(Categories);
+      });
+    });
+    getCategory.then((result) => {
+      Product.findAll({
+        attributes: [
+          "id",
+          "SubcategoryId",
+          "name",
+          "amount",
+          "SaleAmount",
+          "launched",
+        ],
+        where: { CategoryId: Categories[0].id },
+      }).then((products) => {
+        callback({ products, Categories });
+      });
+    });
+  },
+  getStoreByCategory: (req, res, callback) => {
+    Product.findAll({
       attributes: [
         "id",
         "SubcategoryId",
@@ -586,6 +610,7 @@ const AdminService = {
         "SaleAmount",
         "launched",
       ],
+      where: { CategoryId: req.params.categoryId },
     }).then((products) => {
       callback({ products });
     });
