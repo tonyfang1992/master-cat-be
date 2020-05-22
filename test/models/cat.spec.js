@@ -16,7 +16,7 @@ const {
 const db = require("../../models");
 const CatModel = require("../../models/cat");
 
-describe("# User Model", () => {
+describe("# Cat Model", () => {
   before((done) => {
     done();
   });
